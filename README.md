@@ -1,3 +1,3 @@
 # SFG
 
-[!appscreen](/resources/git/app.jpg?raw=true "main screen")
+![appscreen](/resources/git/app.jpg?raw=true)
