@@ -2,7 +2,7 @@
 
 class IScene
 {
-    public:
+public:
     virtual void Init() = 0;
     virtual void UpdateEvents() = 0;
     virtual void UpdateInput() = 0;
@@ -11,5 +11,6 @@ class IScene
     virtual void UpdateFixed() = 0;
     virtual void Render() = 0;
     virtual void Cleanup() = 0;
+    virtual void Debug() = 0;
 
 };

@@ -13,6 +13,7 @@ public:
     int nCurrentFrame;
     float timer;
     float speed;
+    float freq;
     Frame* currentFrame;
     Flipbook* flipbook;
 
@@ -29,4 +30,6 @@ public:
 
     virtual Frame* Next();
     virtual Frame* Prev();
+
+    virtual void Debug();
 };

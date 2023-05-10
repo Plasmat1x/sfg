@@ -3,6 +3,7 @@
 #include "Core/Utils.hpp"
 
 #include "imgui/imgui.h"
+#include "imgui-SFML.h"
 #include <iostream>
 #include <vector>
 #include <Core/Animation/Animator.hpp>
@@ -105,68 +106,27 @@ void TestScene::UpdateFixed()
 
 void TestScene::Debug()
 {
-    ImGui::Begin("Animation test");
+    ImGui::BeginChild("Animation test");
     {
-
-        if (ImGui::CollapsingHeader("Frame"))
-        {
-            ImGui::Text("x = %d", anim.GetAnimation<AnimationSF>()->currentFrame->x);
-            ImGui::Text("y = %d", anim.GetAnimation<AnimationSF>()->currentFrame->y);
-            ImGui::Text("w = %d", anim.GetAnimation<AnimationSF>()->currentFrame->w);
-            ImGui::Text("h = %d", anim.GetAnimation<AnimationSF>()->currentFrame->h);
-            ImGui::Text("n = %d", anim.GetAnimation<AnimationSF>()->currentFrame->n);
-        }
-        if (ImGui::CollapsingHeader("Animation")) {
-            ImGui::Text("Count = %d", anim.GetAnimation<AnimationSF>()->flipbook->count);
-            ImGui::Text("number of frame = %d", anim.GetAnimation<AnimationSF>()->nCurrentFrame);
-            ImGui::Text("speed = %f", anim.GetAnimation<AnimationSF>()->speed);
-            ImGui::Text("Timer = %f", anim.GetAnimation<AnimationSF>()->timer);
-        }
-
-        ImGui::Separator();
-
-        if (ImGui::Button("Prev Frame"))
-        {
-            anim.currentAnimation->Prev();
-            ap = false;
-        }
-
-        ImGui::SameLine();
-        if (ImGui::Button("Play"))
+        if (ImGui::Button("||>"))
         {
             ap = !ap;
         }
-
         ImGui::SameLine();
-        if (ImGui::Button("Next Frame"))
-        {
-            anim.currentAnimation->Next();
-            ap = false;
-        }
-
-        ImGui::Separator();
-
-        for (auto animation : anim.animations)
-        {
-            if (ImGui::Button(animation.first.c_str()))
-            {
-                anim.SetAnimation(animation.first);
-                anim.GetAnimation<AnimationSF>()->Update();
-            }
-        }
-
-        ImGui::Checkbox("hflip", &anim.GetAnimation<AnimationSF>()->hflip);
+        ImGui::Checkbox("h", &anim.GetAnimation<AnimationSF>()->hflip);
         ImGui::SameLine();
-        ImGui::Checkbox("vflip", &anim.GetAnimation<AnimationSF>()->vflip);
+        ImGui::Checkbox("v", &anim.GetAnimation<AnimationSF>()->vflip);
+        ImGui::SameLine();
+        anim.Debug();
+        anim.GetAnimation<AnimationSF>()->Debug();
     }
-    ImGui::End();
+    ImGui::EndChild();
 }
 
 void TestScene::Render()
 {
     window->setView(view);
     window->draw(sprite);
-    Debug();
 }
 
 void TestScene::Cleanup()

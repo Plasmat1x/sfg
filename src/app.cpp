@@ -151,54 +151,63 @@ void App::Debug()
         ImGui::Begin("App Debug", &ImDebugShow);
         {
             ImGui::Text("Timeup : %f", current.asSeconds());
+            ImGui::Separator();
 
-            if (ImGui::CollapsingHeader("Timings"))
+            if (ImGui::CollapsingHeader("APP"))
             {
-                ImGui::Text("Eleapsed Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", eleapsed.asSeconds(), eleapsed.asMilliseconds(), eleapsed.asMicroseconds());
-                ImGui::Text("Current Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", current.asSeconds(), current.asMilliseconds(), current.asMicroseconds());
-                ImGui::Text("Previous Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", previous.asSeconds(), previous.asMilliseconds(), previous.asMicroseconds());
-                ImGui::Text("Lag Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", lag.asSeconds(), lag.asMilliseconds(), lag.asMicroseconds());
-                ImGui::Text("MS_PER_UPDATE(CONST) Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", MS_PER_UPDATE.asSeconds(), MS_PER_UPDATE.asMilliseconds(), MS_PER_UPDATE.asMicroseconds());
-            }
-
-            if (ImGui::CollapsingHeader("Window"))
-            {
-                ImGui::Text("Window: width = %d, height = %d\nResolution: width = %d, height = %d", window->getSize().x, window->getSize().y, resolution.x, resolution.y);
-                ImGui::Text("View: width = %f, height = %f", window->getView().getSize().x, window->getView().getSize().y);
-                ImGui::Text("View center: x = %f, y = %f", window->getView().getCenter().x, window->getView().getCenter().y);
-            }
-            if (ImGui::CollapsingHeader("Scene Manager"))
-            {
-                ImGui::Text("max size: %d\nsize: %d", SceneMgr::sizeMax(), SceneMgr::size());
-            }
-            if (ImGui::CollapsingHeader("Window background fill collor"))
-            {
-                if (ImGui::ColorEdit4("Background fill color", color))
+                if (ImGui::CollapsingHeader("Timings"))
                 {
-                    WindowCollor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-                    WindowCollor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-                    WindowCollor.b = static_cast<sf::Uint8>(color[2] * 255.f);
-                    WindowCollor.a = static_cast<sf::Uint8>(color[3] * 255.f);
+                    ImGui::Text("Eleapsed Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", eleapsed.asSeconds(), eleapsed.asMilliseconds(), eleapsed.asMicroseconds());
+                    ImGui::Text("Current Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", current.asSeconds(), current.asMilliseconds(), current.asMicroseconds());
+                    ImGui::Text("Previous Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", previous.asSeconds(), previous.asMilliseconds(), previous.asMicroseconds());
+                    ImGui::Text("Lag Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", lag.asSeconds(), lag.asMilliseconds(), lag.asMicroseconds());
+                    ImGui::Text("MS_PER_UPDATE(CONST) Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", MS_PER_UPDATE.asSeconds(), MS_PER_UPDATE.asMilliseconds(), MS_PER_UPDATE.asMicroseconds());
                 }
 
-                if (ImGui::Button("default color"))
+                if (ImGui::CollapsingHeader("Window"))
                 {
-                    color[0] = .5f;
-                    color[1] = .5f;
-                    color[2] = .5f;
-                    color[3] = 1.f;
+                    ImGui::Text("Window: width = %d, height = %d\nResolution: width = %d, height = %d", window->getSize().x, window->getSize().y, resolution.x, resolution.y);
+                    ImGui::Text("View: width = %f, height = %f", window->getView().getSize().x, window->getView().getSize().y);
+                    ImGui::Text("View center: x = %f, y = %f", window->getView().getCenter().x, window->getView().getCenter().y);
+                }
+                if (ImGui::CollapsingHeader("Scene Manager"))
+                {
+                    ImGui::Text("max size: %d\nsize: %d", SceneMgr::sizeMax(), SceneMgr::size());
+                }
+                if (ImGui::CollapsingHeader("Window background fill collor"))
+                {
+                    if (ImGui::ColorEdit4("Background fill color", color))
+                    {
+                        WindowCollor.r = static_cast<sf::Uint8>(color[0] * 255.f);
+                        WindowCollor.g = static_cast<sf::Uint8>(color[1] * 255.f);
+                        WindowCollor.b = static_cast<sf::Uint8>(color[2] * 255.f);
+                        WindowCollor.a = static_cast<sf::Uint8>(color[3] * 255.f);
+                    }
 
-                    WindowCollor.r = static_cast<sf::Uint8>(color[0] * 255.f);
-                    WindowCollor.g = static_cast<sf::Uint8>(color[1] * 255.f);
-                    WindowCollor.b = static_cast<sf::Uint8>(color[2] * 255.f);
-                    WindowCollor.a = static_cast<sf::Uint8>(color[3] * 255.f);
+                    if (ImGui::Button("default color"))
+                    {
+                        color[0] = .5f;
+                        color[1] = .5f;
+                        color[2] = .5f;
+                        color[3] = 1.f;
+
+                        WindowCollor.r = static_cast<sf::Uint8>(color[0] * 255.f);
+                        WindowCollor.g = static_cast<sf::Uint8>(color[1] * 255.f);
+                        WindowCollor.b = static_cast<sf::Uint8>(color[2] * 255.f);
+                        WindowCollor.a = static_cast<sf::Uint8>(color[3] * 255.f);
+                    }
+                }
+
+                if (ImGui::CollapsingHeader("Mouse info"))
+                {
+                    ImGui::Text("Global Position:\nx = %d\ny = %d", sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
+                    ImGui::Text("Local Position:\nx = %d\ny = %d", sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
                 }
             }
-
-            if (ImGui::CollapsingHeader("Mouse info"))
+            ImGui::Separator();
+            if (ImGui::CollapsingHeader("SceneDebug"))
             {
-                ImGui::Text("Global Position:\nx = %d\ny = %d", sf::Mouse::getPosition().x, sf::Mouse::getPosition().y);
-                ImGui::Text("Local Position:\nx = %d\ny = %d", sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y);
+                SceneMgr::top()->Debug();
             }
         }
         ImGui::End();

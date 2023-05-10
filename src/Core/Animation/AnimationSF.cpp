@@ -29,7 +29,7 @@ void AnimationSF::Init(const int& x, const int& y,
 void AnimationSF::Play(const float& dt)
 {
     timer += dt;
-    while (speed < timer)
+    while (freq < timer)
     {
         Next();
     }
@@ -69,4 +69,14 @@ Frame* AnimationSF::Prev()
     Animation::Prev();
     Update();
     return currentFrame;
+}
+
+#include"imgui/imgui.h"
+#include"imgui/imgui-SFML.h"
+void AnimationSF::Debug()
+{
+    ImGui::Image(*sprite);
+    ImGui::Separator();
+    Animation::Debug();
+    Update();
 }

@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class TestScene: public IScene
+class TestScene : public IScene
 {
 public:
     TestScene();
@@ -18,9 +18,8 @@ public:
     void UpdateFixed();
     void Render();
     void Cleanup();
-
-private:
     void Debug();
 
+private:
     float timer;
 };

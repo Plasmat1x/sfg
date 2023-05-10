@@ -20,4 +20,6 @@ public:
               const int& w, const int& h,
               const int& c);
 
+    void Debug();
+
 };

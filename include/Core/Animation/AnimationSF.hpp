@@ -27,4 +27,6 @@ public:
     Frame* Next();
     Frame* Prev();
 
+    void Debug();
+
 };

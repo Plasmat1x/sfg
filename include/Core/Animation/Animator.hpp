@@ -1,14 +1,15 @@
 #pragma once
 
-#include<map>
+#include<unordered_map>
 #include<string>
 
 #include<Core/Interfaces/IAnimation.hpp>
 
+typedef std::unordered_map<std::string, IAnimation*> storage;
 class Animator
 {
 public:
-    std::map<std::string, IAnimation*> animations;
+    storage animations;
     IAnimation* currentAnimation;
 
     ~Animator();
@@ -20,6 +21,11 @@ public:
     template<typename T> T* GetAnimation(std::string name);
 
     void Cleanup();
+
+    void Debug();
+
+private:
+    storage::const_iterator cur;
 };
 
 #include <Core/Animation/Animator.inl>

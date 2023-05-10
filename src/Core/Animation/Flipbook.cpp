@@ -36,3 +36,11 @@ void Flipbook::Init(const int& x,
         frames[i] = Frame{ (x + i) * w, y * h, w, h, i };
     }
 }
+
+#include"imgui/imgui.h"
+#include"imgui/imgui-SFML.h"
+
+void Flipbook::Debug()
+{
+    ImGui::Text("Frame count: %d", count);
+}
