@@ -21,12 +21,15 @@ public:
 
     ~AnimationSF();
 
-    void Play(const float& dt);
+    bool Play(const float& dt);
+    bool PlayReverse(const float& dt);
     void Update();
 
-    Frame* Next();
-    Frame* Prev();
+    bool Next();
+    bool Prev();
 
     void Debug();
 
+private:
+    bool textureInspector = false;
 };

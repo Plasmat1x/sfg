@@ -26,13 +26,24 @@ void AnimationSF::Init(const int& x, const int& y,
     Animation::Init(x, y, w, h, c, s);
 }
 
-void AnimationSF::Play(const float& dt)
+bool AnimationSF::Play(const float& dt)
 {
     timer += dt;
     while (freq < timer)
     {
-        Next();
+        return Next();
     }
+    return true;
+}
+
+bool AnimationSF::PlayReverse(const float& dt)
+{
+    timer += dt;
+    while (freq < timer)
+    {
+        return Prev();
+    }
+    return true;
 }
 
 void AnimationSF::Update()
@@ -57,24 +68,38 @@ void AnimationSF::Update()
     sprite->setTextureRect(rect);
 }
 
-Frame* AnimationSF::Next()
+bool AnimationSF::Next()
 {
-    Animation::Next();
+    bool play = Animation::Next();
     Update();
-    return currentFrame;
+    return play;
 }
 
-Frame* AnimationSF::Prev()
+bool AnimationSF::Prev()
 {
-    Animation::Prev();
+    bool play = Animation::Prev();
     Update();
-    return currentFrame;
+    return play;
 }
 
 #include"imgui/imgui.h"
 #include"imgui/imgui-SFML.h"
 void AnimationSF::Debug()
 {
+    ImGui::SeparatorText("Texture preview");
+    if (ImGui::Button("texture"))
+    {
+        textureInspector = !textureInspector;
+    }
+    if (textureInspector)
+    {
+        ImGui::Begin("TextureInspector", &textureInspector, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar);
+        {
+            ImGui::Image(*sprite->getTexture());
+        }
+        ImGui::End();
+    }
+    ImGui::SeparatorText("Animation preview");
     ImGui::Image(*sprite);
     ImGui::Separator();
     Animation::Debug();

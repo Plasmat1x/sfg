@@ -15,6 +15,6 @@ public:
         const float& s
     ) = 0;
 
-    virtual Frame* Next() = 0;
-    virtual Frame* Prev() = 0;
+    virtual bool Next() = 0;
+    virtual bool Prev() = 0;
 };

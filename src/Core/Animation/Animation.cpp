@@ -2,7 +2,7 @@
 
 Animation::Animation()
 {
-    end = false;
+    looped = true;
     hflip = false;
     vflip = false;
     nCurrentFrame = -1;
@@ -43,28 +43,43 @@ void Animation::Init(const int& x,
     currentFrame = &flipbook->frames[nCurrentFrame];
 }
 
-Frame* Animation::Next()
+bool Animation::Next()
 {
+
     nCurrentFrame++;
     if (nCurrentFrame >= flipbook->count)
-        if (end) nCurrentFrame = flipbook->count - 1;
-        else nCurrentFrame = 0;
+        if (!looped)
+        {
+            nCurrentFrame = flipbook->count - 1;
+            return false;
+        }
+        else
+        {
+            nCurrentFrame = 0;
+        }
 
     currentFrame = &flipbook->frames[nCurrentFrame];
     timer = 0.f;
-    return currentFrame;
+    return true;
 }
 
-Frame* Animation::Prev()
+bool Animation::Prev()
 {
     nCurrentFrame--;
     if (nCurrentFrame < 0)
-        if (end) nCurrentFrame = 0;
-        else nCurrentFrame = flipbook->count - 1;
+        if (!looped)
+        {
+            nCurrentFrame = 0;
+            return false;
+        }
+        else
+        {
+            nCurrentFrame = flipbook->count - 1;
+        }
 
     currentFrame = &flipbook->frames[nCurrentFrame];
     timer = 0.f;
-    return currentFrame;
+    return true;
 }
 
 #include "ImGui/imgui.h"
@@ -78,6 +93,7 @@ void Animation::Debug()
             currentFrame = &flipbook->frames[nCurrentFrame];
             timer = 0.f;
         }
+        ImGui::Text("is play: %d", looped);
         ImGui::SeparatorText("Flipbook data");
         flipbook->Debug();
         ImGui::SeparatorText("Frame data");
@@ -85,7 +101,11 @@ void Animation::Debug()
         //ImGui::Text("Frame number = %d", currentFrame->n);
 
         ImGui::SeparatorText("Animation data");
-        ImGui::Text("speed = %f\nfrequence = %f\ntimer = %f", speed, freq, timer);
+        if (ImGui::SliderFloat("speed", &speed, 0.1f, 20.0f, "%.1f"))
+        {
+            freq = 1 / speed;
+        }
+        ImGui::Text("frequence = %f\ntimer = %f", freq, timer);
     }
     ImGui::EndChild();
 }

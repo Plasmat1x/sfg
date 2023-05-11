@@ -207,7 +207,9 @@ void App::Debug()
             ImGui::Separator();
             if (ImGui::CollapsingHeader("SceneDebug"))
             {
-                SceneMgr::top()->Debug();
+                ImGui::BeginChild("SceneDebug", ImVec2(440, 0), true);
+                SceneMgr::top()->Debug(eleapsed.asSeconds());
+                ImGui::EndChild();
             }
         }
         ImGui::End();

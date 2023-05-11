@@ -18,7 +18,7 @@ public:
     void UpdateFixed();
     void Render();
     void Cleanup();
-    void Debug();
+    void Debug(const float& dt);
 
 private:
     float timer;

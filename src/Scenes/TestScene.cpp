@@ -18,12 +18,6 @@ sf::Sprite sprite;
 bool ap = true;
 sf::View view;
 
-void Anima(std::string name)
-{
-    anim.SetAnimation(name);
-    anim.GetAnimation<AnimationSF>()->Update();
-}
-
 TestScene::TestScene()
 {
     Init();
@@ -42,7 +36,7 @@ void TestScene::Init()
     int w = 400;
     int h = 240;
     int cf = 6;
-    float sp = 8.f;
+    float sp = 8.3f;
     float scale = 1.f;
 
     texture.loadFromFile("../resources/image/elf/anim_wip.png");
@@ -89,10 +83,7 @@ void TestScene::UpdateInput()
 
 void TestScene::Update(const float& dt)
 {
-    if (ap)
-    {
-        anim.GetAnimation<AnimationSF>()->Play(dt);
-    }
+
 }
 
 void TestScene::UpdatePast(const float& dt)
@@ -104,14 +95,25 @@ void TestScene::UpdateFixed()
 
 }
 
-void TestScene::Debug()
+void TestScene::Debug(const float& dt)
 {
     ImGui::BeginChild("Animation test");
     {
         if (ImGui::Button("||>"))
         {
             ap = !ap;
+            anim.GetAnimation<AnimationSF>()->nCurrentFrame = 0;
+            anim.GetAnimation<AnimationSF>()->timer = 0.f;
         }
+
+        if (ap)
+        {
+            while (!anim.GetAnimation<AnimationSF>()->Play(dt))
+            {
+                anim.SetAnimation("IDLE");
+            }
+        }
+
         ImGui::SameLine();
         ImGui::Checkbox("h", &anim.GetAnimation<AnimationSF>()->hflip);
         ImGui::SameLine();
@@ -126,7 +128,6 @@ void TestScene::Debug()
 void TestScene::Render()
 {
     window->setView(view);
-    window->draw(sprite);
 }
 
 void TestScene::Cleanup()

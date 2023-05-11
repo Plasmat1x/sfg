@@ -11,6 +11,6 @@ public:
     virtual void UpdateFixed() = 0;
     virtual void Render() = 0;
     virtual void Cleanup() = 0;
-    virtual void Debug() = 0;
+    virtual void Debug(const float& dt) = 0;
 
 };

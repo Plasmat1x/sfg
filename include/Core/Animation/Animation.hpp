@@ -7,7 +7,7 @@
 class Animation : public IAnimation
 {
 public:
-    bool end;
+    bool looped;
     bool hflip;
     bool vflip;
     int nCurrentFrame;
@@ -28,8 +28,8 @@ public:
                       const int& w, const int& h,
                       const int& c, const float& s);
 
-    virtual Frame* Next();
-    virtual Frame* Prev();
+    virtual bool Next();
+    virtual bool Prev();
 
     virtual void Debug();
 };
