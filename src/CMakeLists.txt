@@ -1,5 +1,6 @@
 find_package(SFML COMPONENTS graphics system window CONFIG REQUIRED)
 find_package(Lua REQUIRED)
+find_package(Threads REQUIRED)
 
 add_executable(${PROJECT_NAME}
     main.cpp
@@ -25,6 +26,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${LUABRIDGE_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PRIVATE ${LUA_INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    Threads::Threads
     opengl32
     sfml-system
     sfml-window

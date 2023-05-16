@@ -35,8 +35,6 @@ void Animator::Cleanup()
     for (auto item : animations)
     {
         delete item.second;
-
-
     }
 }
 

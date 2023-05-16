@@ -68,7 +68,6 @@ void App::Init()
     ImControll = false;
 
     SceneMgr::push(new TestScene);
-    SceneMgr::top()->Init();
 }
 
 void App::UpdateWindow()
@@ -150,25 +149,25 @@ void App::Debug()
     {
         ImGui::Begin("App Debug", &ImDebugShow);
         {
-            ImGui::Text("Timeup : %f", current.asSeconds());
+            ImGui::Text("Timeup : %.2f", current.asSeconds());
             ImGui::Separator();
 
             if (ImGui::CollapsingHeader("APP"))
             {
                 if (ImGui::CollapsingHeader("Timings"))
                 {
-                    ImGui::Text("Eleapsed Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", eleapsed.asSeconds(), eleapsed.asMilliseconds(), eleapsed.asMicroseconds());
-                    ImGui::Text("Current Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", current.asSeconds(), current.asMilliseconds(), current.asMicroseconds());
-                    ImGui::Text("Previous Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", previous.asSeconds(), previous.asMilliseconds(), previous.asMicroseconds());
-                    ImGui::Text("Lag Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", lag.asSeconds(), lag.asMilliseconds(), lag.asMicroseconds());
-                    ImGui::Text("MS_PER_UPDATE(CONST) Time:\n\ts: %f\n\tms: %d\n\tmcs: %d", MS_PER_UPDATE.asSeconds(), MS_PER_UPDATE.asMilliseconds(), MS_PER_UPDATE.asMicroseconds());
+                    ImGui::Text("Eleapsed Time:\n\ts: %.2f\n\tms: %d\n\tmcs: %d", eleapsed.asSeconds(), eleapsed.asMilliseconds(), eleapsed.asMicroseconds());
+                    ImGui::Text("Current Time:\n\ts: %.2f\n\tms: %d\n\tmcs: %d", current.asSeconds(), current.asMilliseconds(), current.asMicroseconds());
+                    ImGui::Text("Previous Time:\n\ts: %.2f\n\tms: %d\n\tmcs: %d", previous.asSeconds(), previous.asMilliseconds(), previous.asMicroseconds());
+                    ImGui::Text("Lag Time:\n\ts: %.2f\n\tms: %d\n\tmcs: %d", lag.asSeconds(), lag.asMilliseconds(), lag.asMicroseconds());
+                    ImGui::Text("MS_PER_UPDATE(CONST) Time:\n\ts: %.2f\n\tms: %d\n\tmcs: %d", MS_PER_UPDATE.asSeconds(), MS_PER_UPDATE.asMilliseconds(), MS_PER_UPDATE.asMicroseconds());
                 }
 
                 if (ImGui::CollapsingHeader("Window"))
                 {
                     ImGui::Text("Window: width = %d, height = %d\nResolution: width = %d, height = %d", window->getSize().x, window->getSize().y, resolution.x, resolution.y);
-                    ImGui::Text("View: width = %f, height = %f", window->getView().getSize().x, window->getView().getSize().y);
-                    ImGui::Text("View center: x = %f, y = %f", window->getView().getCenter().x, window->getView().getCenter().y);
+                    ImGui::Text("View: width = %.1f, height = %.1f", window->getView().getSize().x, window->getView().getSize().y);
+                    ImGui::Text("View center: x = %.1f, y = %.1f", window->getView().getCenter().x, window->getView().getCenter().y);
                 }
                 if (ImGui::CollapsingHeader("Scene Manager"))
                 {

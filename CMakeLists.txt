@@ -30,6 +30,7 @@ include_directories(
     include/Game
     include/Interfaces
     include/Core/Animation
+    include/Core/Utils
 )
 
 set(BINARY_DIR ${CMAKE_CURRENT_LIST_DIR}/bin)

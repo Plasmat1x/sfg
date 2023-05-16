@@ -101,11 +101,11 @@ void Animation::Debug()
         //ImGui::Text("Frame number = %d", currentFrame->n);
 
         ImGui::SeparatorText("Animation data");
-        if (ImGui::SliderFloat("speed", &speed, 0.1f, 20.0f, "%.1f"))
+        if (ImGui::SliderFloat("speed (frame per second)", &speed, 0.1f, 20.0f, "%.1f"))
         {
             freq = 1 / speed;
         }
-        ImGui::Text("frequence = %f\ntimer = %f", freq, timer);
+        ImGui::Text("frequence = %.4f\ntimer = %.4f", freq, timer);
     }
     ImGui::EndChild();
 }

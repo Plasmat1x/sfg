@@ -4,6 +4,9 @@
 #include <Core/Animation/AnimationSF.hpp>
 #include <Core/Animation/Animator.hpp>
 
+#include "imgui/imgui.h"
+#include "imgui-SFML.h"
+
 class Player : public sf::Drawable
 {
 public:
@@ -23,7 +26,7 @@ public:
     enum State
     {
         IDLE,
-        RUN,
+        MOVE,
         JUMP,
         FALL,
         CLIMB,
@@ -36,20 +39,9 @@ public:
         LEFT
     };
 
-    enum Control
-    {
-        NONE,
-        W,
-        A,
-        S,
-        D,
-        SPACE,
-        SHIFT
-    };
-
     State state;
     Direction direction;
-    Control control;
+
 
     Player()
     {
@@ -81,12 +73,11 @@ public:
         rect.setOutlineColor(sf::Color::Magenta);
         rect.setOutlineThickness(5.f);
 
-        /*
-        int w = 400;
-        int h = 240;
-        int cf = 6;
-        float sp = 8.f;
-        float scale = 1.f;
+        w = 400;
+        h = 240;
+        cf = 6;
+        sp = 8.3f;
+        scale = 1.f;
 
         sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(0, 0, w, h));
@@ -98,23 +89,37 @@ public:
         animator.AddAnimation("FALL", new AnimationSF(0, 3, w, h, cf - 2, sp, &sprite));
         animator.AddAnimation("CLIMB", new AnimationSF(0, 4, w, h, cf, sp, &sprite));
         animator.AddAnimation("ROLL", new AnimationSF(0, 5, w, h, cf + 1, sp, &sprite));
-        */
+
         Update(0.0f);
     }
 
     void Update(const float& dt)
     {
-        rect.setSize(size);
-        rect.setOrigin(size.x / 2.f, size.y);
+        _size = size;
+        if (state == State::ROLL)
+            _size.y = size.y * 0.5f;
+
+        rect.setSize(_size);
+        rect.setOrigin(_size.x * 0.5f, _size.y);
         rect.setPosition(position);
 
-        sprite.setOrigin(sprite.getTextureRect().width / 2.f, sprite.getTextureRect().height);
+        sprite.setOrigin(w * 0.5f, sprite.getTextureRect().height);
         sprite.setPosition(position);
 
-        updateStataeMachine();
+        if (animator.currentAnimation != nullptr)
+        {
 
-        if (animator.currentAnimation)
+            if (direction == Direction::LEFT)
+            {
+                animator.GetAnimation<AnimationSF>()->hflip = true;
+            }
+            else if (direction == Direction::RIGHT)
+            {
+                animator.GetAnimation<AnimationSF>()->hflip = false;
+            }
+
             animator.GetAnimation<AnimationSF>()->Play(dt);
+        }
     }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -122,7 +127,10 @@ public:
         //target.setView(view);
         target.draw(sprite);
         if (debug)
+        {
             target.draw(rect);
+            Debug();
+        }
     }
 
     void Cleanup()
@@ -130,112 +138,108 @@ public:
 
     }
 
+    void Move()
+    {
+        if (state != State::MOVE)
+        {
+            state = State::MOVE;
+            animator.SetAnimation("MOVE");
+        }
+    }
+
+    void Jump()
+    {
+        if (state != State::JUMP)
+        {
+            state = State::JUMP;
+            animator.SetAnimation("JUMP");
+        }
+    }
+
+    void Fall()
+    {
+        if (state != State::FALL)
+        {
+            state = State::FALL;
+            animator.SetAnimation("FALL");
+        }
+    }
+
+    void Roll()
+    {
+        if (state != State::ROLL)
+        {
+            state = State::ROLL;
+            animator.SetAnimation("ROLL");
+        }
+    }
+
+    void Climb()
+    {
+        if (state != State::CLIMB)
+        {
+            state = State::CLIMB;
+            animator.SetAnimation("CLIMB");
+        }
+    }
+
+    void Idle()
+    {
+        if (state != State::IDLE)
+        {
+            state = State::IDLE;
+            animator.SetAnimation("IDLE");
+        }
+    }
+
+    void Debug() const
+    {
+        ImGui::Begin("Player object");
+
+        ImGui::SeparatorText("Sprite::Texture");
+        ImGui::Text("x = %d\ny = %d\nwidth = %d\nheight = %d",
+                    sprite.getTextureRect().left,
+                    sprite.getTextureRect().top,
+                    sprite.getTextureRect().width,
+                    sprite.getTextureRect().height);
+
+        ImGui::SeparatorText("Sprite::Rect");
+        ImGui::Text("x = %.1f\ny = %.1f\nwidth = %.1f\nheight = %.1f",
+                    sprite.getGlobalBounds().top,
+                    sprite.getGlobalBounds().left,
+                    sprite.getGlobalBounds().width,
+                    sprite.getGlobalBounds().height
+        );
+
+        ImGui::SeparatorText("Sprite::Origin");
+        ImGui::Text("x = %.1f\ny = %.1f",
+                    sprite.getOrigin().x,
+                    sprite.getOrigin().y
+        );
+
+        ImGui::SeparatorText("Sprite::Position");
+        ImGui::Text("x = %.1f\ny = %.1f",
+                    sprite.getPosition().x,
+                    sprite.getPosition().y
+        );
+
+        ImGui::SeparatorText("Player::Rect");
+        ImGui::Text("x = %.1f\ny = %.1f\nwidth = %.1f\nheight = %.1f",
+                    rect.getGlobalBounds().top,
+                    rect.getGlobalBounds().left,
+                    rect.getGlobalBounds().width,
+                    rect.getGlobalBounds().height
+        );
+
+        ImGui::End();
+    }
 private:
 
-    std::string astr;
+    int w = 400;
+    int h = 240;
+    int cf = 6;
+    float sp = 8.3f;
+    float scale = 1.f;
 
-    void adir()
-    {
-        if (direction == Direction::RIGHT)
-        {
-            animator.GetAnimation<AnimationSF>(astr)->hflip = false;
-        }
-        else if (direction == Direction::LEFT)
-        {
-            animator.GetAnimation<AnimationSF>(astr)->hflip = false;
-        }
-    }
-
-    void mdir()
-    {
-        if (control == Control::A || control == Control::D)
-        {
-            if (control == Control::A)
-            {
-                direction = Direction::LEFT;
-            }
-            else if (control == Control::D)
-            {
-                direction = Direction::RIGHT;
-            }
-        }
-    }
-
-    void updateStataeMachine()
-    {
-        astr = "";
-
-        switch (state)
-        {
-
-        case State::IDLE:
-            astr = "IDLE";
-            animator.SetAnimation(astr);
-            adir();
-
-            if (control == Control::A || control == Control::D)
-                state = State::RUN;
-
-            if (control == Control::SPACE)
-                state = State::JUMP;
-
-            if (control == Control::SHIFT)
-                state = State::ROLL;
-
-            break;
-
-        case State::RUN:
-            astr = "RUN";
-            animator.SetAnimation(astr);
-            adir();
-            mdir();
-
-            if (control == Control::A || control == Control::D)
-                state = State::RUN;
-
-            if (control == Control::SPACE)
-                state = State::JUMP;
-
-            if (control == Control::SHIFT)
-                state = State::ROLL;
-
-            break;
-
-        case State::JUMP:
-            astr = "JUMP";
-            animator.SetAnimation(astr);
-            adir();
-            mdir();
-
-            state = State::IDLE;
-            break;
-
-        case State::FALL:
-            astr = "FALL";
-            animator.SetAnimation(astr);
-            adir();
-            mdir();
-            state = State::IDLE;
-            break;
-
-        case State::CLIMB:
-            astr = "CLIMB";
-            animator.SetAnimation(astr);
-            adir();
-            state = State::IDLE;
-            break;
-
-        case State::ROLL:
-            astr = "ROLL";
-            animator.SetAnimation(astr);
-            adir();
-            mdir();
-            state = State::IDLE;
-            break;
-
-        default:
-            break;
-        }
-    }
-
+    sf::Vector2f _size;
 };
