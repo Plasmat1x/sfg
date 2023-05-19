@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <Core/Animation/AnimationSF.hpp>
 #include <Core/Animation/Animator.hpp>
 
 #include "imgui/imgui.h"
@@ -11,7 +10,7 @@ class Player : public sf::Drawable
 {
 public:
 
-    Animator animator;
+    Animation::Animator animator;
     sf::Sprite sprite;
     sf::Texture texture;
     sf::RectangleShape rect;
@@ -83,14 +82,12 @@ public:
         sprite.setTextureRect(sf::IntRect(0, 0, w, h));
         sprite.setScale(scale, scale);
 
-        animator.AddAnimation("IDLE", new AnimationSF(0, 0, w, h, cf, sp, &sprite));
-        animator.AddAnimation("MOVE", new AnimationSF(0, 1, w, h, cf, sp, &sprite));
-        animator.AddAnimation("JUMP", new  AnimationSF(0, 2, w, h, cf - 2, sp, &sprite));
-        animator.AddAnimation("FALL", new AnimationSF(0, 3, w, h, cf - 2, sp, &sprite));
-        animator.AddAnimation("CLIMB", new AnimationSF(0, 4, w, h, cf, sp, &sprite));
-        animator.AddAnimation("ROLL", new AnimationSF(0, 5, w, h, cf + 1, sp, &sprite));
-
-        Update(0.0f);
+        animator.addAnimation("IDLE", new Animation::Animation(0, 0, w, h, cf, sp));
+        animator.addAnimation("MOVE", new Animation::Animation(0, 1, w, h, cf, sp));
+        animator.addAnimation("JUMP", new  Animation::Animation(0, 2, w, h, cf - 2, sp));
+        animator.addAnimation("FALL", new Animation::Animation(0, 3, w, h, cf - 2, sp));
+        animator.addAnimation("CLIMB", new Animation::Animation(0, 4, w, h, cf, sp));
+        animator.addAnimation("ROLL", new Animation::Animation(0, 5, w, h, cf + 1, sp));
     }
 
     void Update(const float& dt)
@@ -103,23 +100,24 @@ public:
         rect.setOrigin(_size.x * 0.5f, _size.y);
         rect.setPosition(position);
 
-        sprite.setOrigin(w * 0.5f, sprite.getTextureRect().height);
+        sprite.setOrigin(animator.getFrame()->w / 2, animator.getFrame()->h);
         sprite.setPosition(position);
 
-        if (animator.currentAnimation != nullptr)
+        if (animator.getAnimation() != nullptr)
         {
 
             if (direction == Direction::LEFT)
             {
-                animator.GetAnimation<AnimationSF>()->hflip = true;
+                animator.getAnimation()->setFlipH(true);
             }
             else if (direction == Direction::RIGHT)
             {
-                animator.GetAnimation<AnimationSF>()->hflip = false;
+                animator.getAnimation()->setFlipH(false);
             }
 
-            animator.GetAnimation<AnimationSF>()->Play(dt);
+            animator.getAnimation()->playForward(dt);
         }
+        sprite.setTextureRect(intrect(*animator.getFrame()));
     }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -143,7 +141,7 @@ public:
         if (state != State::MOVE)
         {
             state = State::MOVE;
-            animator.SetAnimation("MOVE");
+            animator.setAnimation("MOVE");
         }
     }
 
@@ -152,7 +150,7 @@ public:
         if (state != State::JUMP)
         {
             state = State::JUMP;
-            animator.SetAnimation("JUMP");
+            animator.setAnimation("JUMP");
         }
     }
 
@@ -161,7 +159,7 @@ public:
         if (state != State::FALL)
         {
             state = State::FALL;
-            animator.SetAnimation("FALL");
+            animator.setAnimation("FALL");
         }
     }
 
@@ -170,7 +168,7 @@ public:
         if (state != State::ROLL)
         {
             state = State::ROLL;
-            animator.SetAnimation("ROLL");
+            animator.setAnimation("ROLL");
         }
     }
 
@@ -179,7 +177,7 @@ public:
         if (state != State::CLIMB)
         {
             state = State::CLIMB;
-            animator.SetAnimation("CLIMB");
+            animator.setAnimation("CLIMB");
         }
     }
 
@@ -188,7 +186,7 @@ public:
         if (state != State::IDLE)
         {
             state = State::IDLE;
-            animator.SetAnimation("IDLE");
+            animator.setAnimation("IDLE");
         }
     }
 
@@ -242,4 +240,9 @@ private:
     float scale = 1.f;
 
     sf::Vector2f _size;
+
+    sf::IntRect intrect(Animation::Frame& frame)
+    {
+        return sf::IntRect(frame.x, frame.y, frame.w, frame.h);
+    }
 };

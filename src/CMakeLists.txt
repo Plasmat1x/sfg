@@ -16,9 +16,9 @@ add_executable(${PROJECT_NAME}
     Core/Utils.cpp
     Game/Player.cpp
     Core/Animation/Animation.cpp
-    Core/Animation/AnimationSF.cpp
     Core/Animation/Animator.cpp
     Core/Animation/Flipbook.cpp
+    Core/Animation/Frame.cpp
 )
 
 find_path(LUABRIDGE_INCLUDE_DIRS "LuaBridge/List.h")
