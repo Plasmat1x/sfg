@@ -38,7 +38,7 @@ void Animator::Cleanup()
     }
 }
 
-#include "ImGui/imgui.h"
+#include "Imgui/imgui.h"
 #include "imgui/imgui-SFML.h"
 #include <Core/Animation/AnimationSF.hpp>
 void Animator::Debug()
