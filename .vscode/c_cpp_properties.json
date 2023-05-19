@@ -4,8 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${default}",
-                "${workspaceFolder}/include",
-                "${workspaceFolder}/include/**",
+                "${workspaceFolder}/**",
                 "E:/vcpkg/installed/x64-windows/include"
             ],
             "defines": [
