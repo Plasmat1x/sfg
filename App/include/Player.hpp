@@ -127,6 +127,7 @@ public:
         if (state != State::MOVE)
         {
             state = State::MOVE;
+            animator.getAnimation()->reset();
             animator.setAnimation("MOVE");
         }
     }
@@ -136,6 +137,7 @@ public:
         if (state != State::JUMP)
         {
             state = State::JUMP;
+            animator.getAnimation()->reset();
             animator.setAnimation("JUMP");
         }
     }
@@ -145,6 +147,7 @@ public:
         if (state != State::FALL)
         {
             state = State::FALL;
+            animator.getAnimation()->reset();
             animator.setAnimation("FALL");
         }
     }
@@ -154,6 +157,7 @@ public:
         if (state != State::ROLL)
         {
             state = State::ROLL;
+            animator.getAnimation()->reset();
             animator.setAnimation("ROLL");
         }
     }
@@ -163,6 +167,7 @@ public:
         if (state != State::CLIMB)
         {
             state = State::CLIMB;
+            animator.getAnimation()->reset();
             animator.setAnimation("CLIMB");
         }
     }
@@ -172,6 +177,7 @@ public:
         if (state != State::IDLE)
         {
             state = State::IDLE;
+            animator.getAnimation()->reset();
             animator.setAnimation("IDLE");
         }
     }
