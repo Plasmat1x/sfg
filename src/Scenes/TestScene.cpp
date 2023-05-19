@@ -113,6 +113,9 @@ void TestScene::UpdateInput()
 void TestScene::Update(const float& dt)
 {
     p.Update(dt);
+
+    if (ap)
+        p.UpdateAnimation(dt);
 }
 
 void TestScene::UpdatePast(const float& dt)
@@ -138,6 +141,9 @@ void TestScene::Debug(const float& dt)
         ImGui::SameLine();
         //ImGui::Checkbox("v", &anim.getAnimation()->isFlipV());
         ImGui::SameLine();
+
+        p.animator.debug();
+        p.animator.getAnimation()->debug();
     }
     ImGui::EndChild();
 }
@@ -145,12 +151,13 @@ void TestScene::Debug(const float& dt)
 void TestScene::Render()
 {
     window->setView(view);
-    window->draw(vline);
 
     window->draw(rect);
 
-    window->draw(hline);
     window->draw(p);
+
+    window->draw(vline);
+    window->draw(hline);
 
 }
 

@@ -102,22 +102,6 @@ public:
 
         sprite.setOrigin(animator.getFrame()->w / 2, animator.getFrame()->h);
         sprite.setPosition(position);
-
-        if (animator.getAnimation() != nullptr)
-        {
-
-            if (direction == Direction::LEFT)
-            {
-                animator.getAnimation()->setFlipH(true);
-            }
-            else if (direction == Direction::RIGHT)
-            {
-                animator.getAnimation()->setFlipH(false);
-            }
-
-            animator.getAnimation()->playForward(dt);
-        }
-        sprite.setTextureRect(intrect(*animator.getFrame()));
     }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const
@@ -231,6 +215,25 @@ public:
 
         ImGui::End();
     }
+
+    void UpdateAnimation(const float& dt)
+    {
+        if (animator.getAnimation() != nullptr)
+        {
+
+            if (direction == Direction::LEFT)
+            {
+                animator.getAnimation()->setFlipH(true);
+            }
+            else if (direction == Direction::RIGHT)
+            {
+                animator.getAnimation()->setFlipH(false);
+            }
+
+            animator.getAnimation()->playForward(dt);
+        }
+        sprite.setTextureRect(intrect(*animator.getFrame()));
+    }
 private:
 
     int w = 400;
@@ -243,6 +246,19 @@ private:
 
     sf::IntRect intrect(Animation::Frame& frame)
     {
-        return sf::IntRect(frame.x, frame.y, frame.w, frame.h);
+        sf::IntRect _r(frame.x, frame.y, frame.w, frame.h);
+
+        if (animator.getAnimation()->isFlipH())
+        {
+            _r.left = frame.x + frame.w;
+            _r.width = -frame.w;
+        }
+        if (animator.getAnimation()->isFlipV())
+        {
+            _r.top = frame.y + frame.h;
+            _r.height = -frame.h;
+        }
+
+        return _r;
     }
 };

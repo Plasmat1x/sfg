@@ -18,6 +18,7 @@ namespace Animation
     {
         storage.insert(std::pair<std::string, Animation*>(name, animation));
         cur = storage.cbegin();
+        if (!currentAnimation) currentAnimation = storage.begin()->second;
 
         return currentAnimation;
     }
