@@ -21,7 +21,7 @@ namespace anim
                   const int& w, const int& h,
                   const int& count, const float& speed);
 
-        ~Animation();
+        virtual ~Animation();
 
         /// @brief manual initializator. Create animation with parameters for single frame
         /// @param x - number frame by x axis of spritesheet
@@ -33,9 +33,6 @@ namespace anim
         void init(const int& x, const int& y,
                   const int& w, const int& h,
                   const int& count, const float& speed);
-
-        /// @brief function for Debug GUI (ImGui)
-        void debug();
 
         /// @brief next frame;
         /// @return true if ended playing if Flag Animation::looped == false
@@ -88,6 +85,8 @@ namespace anim
 
         /// @brief reset all variables to zero
         void reset();
+
+        virtual void debug() {};
 
     protected:
         bool looped;

@@ -29,10 +29,6 @@ namespace anim
             arr[i] = Frame((x + i) * w, y * h, w, h, i);
         }
     }
-    void Flipbook::debug()
-    {
-
-    }
     void Flipbook::cleanup()
     {
         if (arr) delete[] arr;

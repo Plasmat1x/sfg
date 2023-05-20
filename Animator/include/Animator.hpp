@@ -12,7 +12,7 @@ namespace anim
     public:
         /// @brief Constructor <Empty>
         Animator();
-        ~Animator();
+        virtual ~Animator();
 
         /// @brief Add animation in container, if container was empty set animation at begin
         /// @param name - Key
@@ -34,15 +34,14 @@ namespace anim
         /// @return animation at Key
         Animation* getAnimation(std::string name);
 
-        /// @brief for Debug info
-        void debug();
-
         /// @brief manual cleanup
         void cleanup();
 
         /// @brief return current frame of current animation
         /// @return Frame
         Frame* getFrame();
+
+        virtual void debug() {};
     private:
         Map storage;
         Map::const_iterator cur;

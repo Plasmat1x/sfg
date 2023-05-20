@@ -129,10 +129,6 @@ namespace anim
     {
         delete flipbook;
     }
-    void Animation::debug()
-    {
-
-    }
     void Animation::reset()
     {
         this->nCurrentFrame = 0;

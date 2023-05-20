@@ -22,8 +22,8 @@ namespace anim
         Frame(const int& x, const int& y,
               const int& w, const int& h,
               const int& n);
+        virtual ~Frame() {};
 
-        /// @brief for Debug UI (ImGui)
-        void debug();
+        virtual void debug() {};
     };
 } // namespace Animation

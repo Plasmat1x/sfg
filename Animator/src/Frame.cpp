@@ -22,11 +22,5 @@ namespace anim
         this->n = n;
 
     }
-
-    void Frame::debug()
-    {
-
-    }
-
 } // namespace Animation
 

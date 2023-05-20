@@ -19,7 +19,7 @@ namespace anim
                  const int& w, const int& h,
                  const int& count);
 
-        ~Flipbook();
+        virtual ~Flipbook();
 
         /// @brief manual initializer of Flipbook
         /// @param x - number frame at x 
@@ -31,9 +31,6 @@ namespace anim
                   const int& w, const int& h,
                   const int& count);
 
-        /// @brief for DebugUI (ImGui)
-        void debug();
-
         /// @brief manual cleanup
         void cleanup();
 
@@ -44,6 +41,8 @@ namespace anim
         /// @brief return array of frames
         /// @return Frame*
         Frame* frames();
+
+        virtual void debug() {};
 
     private:
         int count;

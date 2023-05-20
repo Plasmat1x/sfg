@@ -29,11 +29,6 @@ namespace anim
     {
         return storage.at(name);
     }
-
-    void Animator::debug()
-    {
-
-    }
     void Animator::cleanup()
     {
         if (!storage.empty())
