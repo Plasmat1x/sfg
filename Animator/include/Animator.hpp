@@ -3,12 +3,10 @@
 #include <unordered_map>
 #include <Animation.hpp>
 
-namespace anim
-{
+namespace anim {
     typedef std::unordered_map<std::string, Animation*> Map;
 
-    class Animator
-    {
+    class Animator {
     public:
         /// @brief Constructor <Empty>
         Animator();

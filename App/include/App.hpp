@@ -2,8 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-class App
-{
+class App {
 public:
     int run();
 

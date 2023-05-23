@@ -2,8 +2,7 @@
 
 class SceneManager;
 
-class SceneManagerDestroyer
-{
+class SceneManagerDestroyer {
 public:
     ~SceneManagerDestroyer();
     void init(SceneManager* p);

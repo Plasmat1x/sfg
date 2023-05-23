@@ -1,0 +1,82 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "resources/Maps/map3.tmx",
+    "expandedProjectPaths": [
+        "resources/Tilesets",
+        "build/.cmake",
+        "resources/Maps",
+        "resources",
+        ".",
+        "resources/Textures"
+    ],
+    "fileStates": {
+        "resources/Maps/map1.tmx": {
+            "scale": 2,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 753.25,
+                "y": 422
+            }
+        },
+        "resources/Maps/map2.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.6328125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 133.8181818181818,
+                "y": 56.34449760765551
+            }
+        },
+        "resources/Maps/map3.tmx": {
+            "expandedGroupLayers": [
+                10,
+                11
+            ],
+            "scale": 0.5,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 556,
+                "y": 954
+            }
+        },
+        "resources/Textures/tileset1.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "resources/Tilesets/tileset1.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.externalTilesetPath": "E:/tiled/TiledTest/resources/Tilesets",
+    "last.imagePath": "E:/tiled/TiledTest/resources/Textures",
+    "map.fixedSize": true,
+    "map.height": 50,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 200,
+    "openFiles": [
+        "resources/Tilesets/tileset1.tsx",
+        "resources/Maps/map3.tmx"
+    ],
+    "project": "TiledTest.tiled-project",
+    "recentFiles": [
+        "resources/Tilesets/tileset1.tsx",
+        "resources/Maps/map3.tmx",
+        "resources/Maps/map1.tmx",
+        "resources/Maps/map2.tmx",
+        "resources/Textures/tileset1.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

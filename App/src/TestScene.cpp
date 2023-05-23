@@ -11,11 +11,13 @@
 
 #include <Player.hpp>
 
+#include <tinyxml2.h>
+
 extern sf::RenderWindow* window;
 extern sf::Event* event;
 sf::Texture texture;
-bool ap = true;
 sf::View view;
+sf::View view2;
 
 sf::RectangleShape rect;
 sf::RectangleShape vline;
@@ -23,26 +25,19 @@ sf::RectangleShape hline;
 
 Player p;
 
-TestScene::TestScene()
-{
+TestScene::TestScene() {
     init();
 }
 
-TestScene::~TestScene()
-{
+TestScene::~TestScene() {
     cleanup();
 }
 
-void TestScene::init()
-{
+void TestScene::init() {
     view.setSize(1280, 720);
     view.setCenter(window->getSize().x / 2.f, window->getSize().y / 2.f);
-
-    int w = 400;
-    int h = 240;
-    int cf = 6;
-    float sp = 8.3f;
-    float scale = 1.0f;
+    view2.setSize(1280, 720);
+    view2.setCenter(window->getSize().x / 2.f, window->getSize().y / 2.f);
 
     texture.loadFromFile("../resources/image/elf/anim_wip.png");
 
@@ -65,101 +60,71 @@ void TestScene::init()
     p.debug = true;
 }
 
-void TestScene::updateEvents()
-{
+void TestScene::updateEvents() {
 
 }
 
-void TestScene::updateInput()
-{
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
+void TestScene::updateInput() {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         p.Climb();
         p.position.y = p.position.y - 1.f;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-    {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         p.direction = Player::Direction::LEFT;
         p.Move();
         p.position.x = p.position.x - 1.f;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         p.Fall();
         p.position.y = p.position.y + 1.f;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         p.direction = Player::Direction::RIGHT;
         p.Move();
         p.position.x = p.position.x + 1.f;
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         p.Jump();
 
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
-    {
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
         p.Roll();
     }
-    else
-    {
+    else {
         p.Idle();
     }
 }
 
-void TestScene::update(const float& dt)
-{
+void TestScene::update(const float& dt) {
     p.Update(dt);
-
-    if (ap)
-        p.UpdateAnimation(dt);
+    p.UpdateAnimation(dt);
 }
 
-void TestScene::updatePast(const float& dt)
-{
+void TestScene::updatePast(const float& dt) {
+    p.setCam(&view);
 }
 
-void TestScene::updateFixed()
-{
+void TestScene::updateFixed() {
 
 }
 
-void TestScene::debug(const float& dt)
-{
-    ImGui::BeginChild("Animation test");
-    {
-        if (ImGui::Button("||>"))
-        {
-            ap = !ap;
-        }
+void TestScene::debug(const float& dt) {
 
-        ImGui::SameLine();
-        //ImGui::Checkbox("h", &anim.getAnimation()->isFlipH());
-        ImGui::SameLine();
-        //ImGui::Checkbox("v", &anim.getAnimation()->isFlipV());
-        ImGui::SameLine();
-
-        p.animator.debug();
-        p.animator.getAnimation()->debug();
-    }
-    ImGui::EndChild();
 }
 
 void TestScene::render()
 {
     window->setView(view);
-
+    window->draw(vline);
+    window->draw(hline);
     window->draw(rect);
-
     window->draw(p);
 
+    window->setView(view2);
     window->draw(vline);
     window->draw(hline);
 
 }
 
-void TestScene::cleanup()
-{
+void TestScene::cleanup() {
 }

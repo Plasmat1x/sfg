@@ -4,8 +4,7 @@
 
 class SceneManager;
 
-class ScnMgrDstr
-{
+class ScnMgrDstr {
 public:
     ~ScnMgrDstr();
     void init(SceneManager* p);
@@ -13,8 +12,7 @@ private:
     SceneManager* p_instance;
 };
 
-class SceneManager
-{
+class SceneManager {
 public:
     static SceneManager& getInstance();
 

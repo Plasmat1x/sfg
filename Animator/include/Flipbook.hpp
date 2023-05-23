@@ -2,10 +2,8 @@
 
 #include "Frame.hpp"
 
-namespace anim
-{
-    class Flipbook
-    {
+namespace anim {
+    class Flipbook {
     public:
         Flipbook();
 

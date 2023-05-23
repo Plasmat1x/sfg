@@ -1,9 +1,7 @@
 #pragma once
 
-namespace anim
-{
-    class Frame
-    {
+namespace anim {
+    class Frame {
     public:
         int x = -1;
         int y = -1;

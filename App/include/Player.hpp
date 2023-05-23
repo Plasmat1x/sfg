@@ -8,8 +8,7 @@
 
 using namespace anim;
 
-class Player : public sf::Drawable
-{
+class Player : public sf::Drawable {
 public:
 
     Animator animator;
@@ -24,8 +23,7 @@ public:
 
     bool debug;
 
-    enum State
-    {
+    enum State {
         IDLE,
         MOVE,
         JUMP,
@@ -34,8 +32,7 @@ public:
         ROLL
     };
 
-    enum Direction
-    {
+    enum Direction {
         RIGHT,
         LEFT
     };
@@ -44,25 +41,21 @@ public:
     Direction direction;
 
 
-    Player()
-    {
+    Player() {
 
     }
 
-    Player(sf::Vector2f p, sf::Vector2f s, sf::Texture t)
-    {
+    Player(sf::Vector2f p, sf::Vector2f s, sf::Texture t) {
         state = State::IDLE;
         direction = Direction::RIGHT;
         Init(p, s, t);
     }
 
-    ~Player()
-    {
+    ~Player() {
 
     }
 
-    void Init(sf::Vector2f p, sf::Vector2f s, sf::Texture t)
-    {
+    void Init(sf::Vector2f p, sf::Vector2f s, sf::Texture t) {
         state = State::IDLE;
         direction = Direction::RIGHT;
 
@@ -72,7 +65,7 @@ public:
 
         rect.setFillColor(sf::Color::Transparent);
         rect.setOutlineColor(sf::Color::Magenta);
-        rect.setOutlineThickness(5.f);
+        rect.setOutlineThickness(1.f);
 
         w = 400;
         h = 240;
@@ -92,8 +85,7 @@ public:
         animator.addAnimation("ROLL", new Animation(0, 5, w, h, cf + 1, sp));
     }
 
-    void Update(const float& dt)
-    {
+    void Update(const float& dt) {
         _size = size;
         if (state == State::ROLL)
             _size.y = size.y * 0.5f;
@@ -106,8 +98,7 @@ public:
         sprite.setPosition(position);
     }
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const
-    {
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         //target.setView(view);
         target.draw(sprite);
         if (debug)
@@ -117,73 +108,61 @@ public:
         }
     }
 
-    void Cleanup()
-    {
+    void Cleanup() {
 
     }
 
-    void Move()
-    {
-        if (state != State::MOVE)
-        {
+    //TODO:State pattern
+
+    void Move() {
+        if (state != State::MOVE) {
             state = State::MOVE;
             animator.getAnimation()->reset();
             animator.setAnimation("MOVE");
         }
     }
 
-    void Jump()
-    {
-        if (state != State::JUMP)
-        {
+    void Jump() {
+        if (state != State::JUMP) {
             state = State::JUMP;
             animator.getAnimation()->reset();
             animator.setAnimation("JUMP");
         }
     }
 
-    void Fall()
-    {
-        if (state != State::FALL)
-        {
+    void Fall() {
+        if (state != State::FALL) {
             state = State::FALL;
             animator.getAnimation()->reset();
             animator.setAnimation("FALL");
         }
     }
 
-    void Roll()
-    {
-        if (state != State::ROLL)
-        {
+    void Roll() {
+        if (state != State::ROLL) {
             state = State::ROLL;
             animator.getAnimation()->reset();
             animator.setAnimation("ROLL");
         }
     }
 
-    void Climb()
-    {
-        if (state != State::CLIMB)
-        {
+    void Climb() {
+        if (state != State::CLIMB) {
             state = State::CLIMB;
             animator.getAnimation()->reset();
             animator.setAnimation("CLIMB");
         }
     }
 
-    void Idle()
-    {
-        if (state != State::IDLE)
-        {
+    void Idle() {
+        if (state != State::IDLE) {
             state = State::IDLE;
             animator.getAnimation()->reset();
             animator.setAnimation("IDLE");
         }
     }
 
-    void Debug() const
-    {
+    void Debug() const {
         ImGui::Begin("Player object");
 
         ImGui::SeparatorText("Sprite::Texture");
@@ -224,17 +203,13 @@ public:
         ImGui::End();
     }
 
-    void UpdateAnimation(const float& dt)
-    {
-        if (animator.getAnimation() != nullptr)
-        {
+    void UpdateAnimation(const float& dt) {
+        if (animator.getAnimation() != nullptr) {
 
-            if (direction == Direction::LEFT)
-            {
+            if (direction == Direction::LEFT) {
                 animator.getAnimation()->setFlipH(true);
             }
-            else if (direction == Direction::RIGHT)
-            {
+            else if (direction == Direction::RIGHT) {
                 animator.getAnimation()->setFlipH(false);
             }
 
@@ -242,6 +217,15 @@ public:
         }
         sprite.setTextureRect(intrect(*animator.getFrame()));
     }
+
+    sf::Vector2f getCamPivot() {
+        return sf::Vector2f(position.x, position.y - (size.y * 0.5f));
+    }
+
+    void setCam(sf::View* view) {
+        view->setCenter(sf::Vector2f(position.x, position.y - (size.y * 0.5f)));
+    }
+
 private:
 
     int w = 400;
@@ -252,17 +236,14 @@ private:
 
     sf::Vector2f _size;
 
-    sf::IntRect intrect(anim::Frame& frame)
-    {
+    sf::IntRect intrect(anim::Frame& frame) {
         sf::IntRect _r(frame.x, frame.y, frame.w, frame.h);
 
-        if (animator.getAnimation()->isFlipH())
-        {
+        if (animator.getAnimation()->isFlipH()) {
             _r.left = frame.x + frame.w;
             _r.width = -frame.w;
         }
-        if (animator.getAnimation()->isFlipV())
-        {
+        if (animator.getAnimation()->isFlipV()) {
             _r.top = frame.y + frame.h;
             _r.height = -frame.h;
         }

@@ -1,9 +1,7 @@
 #include "Frame.hpp"
 
-namespace anim
-{
-    Frame::Frame()
-    {
+namespace anim {
+    Frame::Frame() {
         this->x = -1;
         this->y = -1;
         this->w = -1;
@@ -13,8 +11,7 @@ namespace anim
 
     Frame::Frame(const int& x, const int& y,
                  const int& w, const int& h,
-                 const int& n)
-    {
+                 const int& n) {
         this->x = x;
         this->y = y;
         this->w = w;

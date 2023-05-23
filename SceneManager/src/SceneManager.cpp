@@ -9,38 +9,29 @@ SceneManager* SceneManager::_instance = nullptr;
 ScnMgrDstr SceneManager::destroyer;
 
 
-SceneManager::SceneManager()
-{
+SceneManager::SceneManager() {
 
 }
 
-SceneManager::~SceneManager()
-{
-    for (size_t i = 0; i < m_size; i++)
-    {
-        if (scenes[i])
-        {
+SceneManager::~SceneManager() {
+    for (size_t i = 0; i < m_size; i++) {
+        if (scenes[i]) {
             delete scenes[i];
             scenes[i] = nullptr;
         }
     }
 }
 
-void SceneManager::push(IScene* scene)
-{
-    if (c_size < m_size)
-    {
+void SceneManager::push(IScene* scene) {
+    if (c_size < m_size) {
         scenes[c_size++] = scene;
     }
-    else
-    {
-        if (scenes[0])
-        {
+    else {
+        if (scenes[0]) {
             delete scenes[0];
             scenes[0] = nullptr;
         }
-        for (size_t i = 1; i < c_size; i++)
-        {
+        for (size_t i = 1; i < c_size; i++) {
             scenes[i - 1] = scenes[i];
         }
         scenes[c_size - 1] = scene;
@@ -49,17 +40,13 @@ void SceneManager::push(IScene* scene)
     changeScene = true;
 }
 
-void SceneManager::popFromBegin()
-{
-    if (c_size > 0)
-    {
-        if (scenes[0])
-        {
+void SceneManager::popFromBegin() {
+    if (c_size > 0) {
+        if (scenes[0]) {
             delete scenes[0];
             scenes[0] = nullptr;
         }
-        for (size_t i = 1; i < c_size; i++)
-        {
+        for (size_t i = 1; i < c_size; i++) {
             scenes[i - 1] = scenes[i];
         }
         c_size--;
@@ -67,12 +54,9 @@ void SceneManager::popFromBegin()
     changeScene = true;
 }
 
-void SceneManager::pop()
-{
-    if (c_size > 0)
-    {
-        if (scenes[c_size - 1])
-        {
+void SceneManager::pop() {
+    if (c_size > 0) {
+        if (scenes[c_size - 1]) {
             delete scenes[c_size - 1];
             scenes[c_size - 1] = nullptr;
         }
@@ -81,27 +65,22 @@ void SceneManager::pop()
     changeScene = true;
 }
 
-void SceneManager::replace(IScene* scene) // exception (try call methods deleted Scene object)
-{
-    if (c_size > 0)
-    {
+//FIXME: exception (try call methods deleted Scene object)
+void SceneManager::replace(IScene* scene) {
+    if (c_size > 0) {
         pop();
         push(scene);
     }
     changeScene = true;
 }
 
-void SceneManager::swap()
-{
+void SceneManager::swap() {
 }
 
-void SceneManager::shift()
-{
+void SceneManager::shift() {
     IScene* tmp = scenes[c_size - 1];
-    for (size_t i = 0; i < c_size; i++)
-    {
-        if (scenes[i])
-        {
+    for (size_t i = 0; i < c_size; i++) {
+        if (scenes[i]) {
             delete scenes[i];
             scenes[i] = nullptr;
         }
@@ -113,27 +92,21 @@ void SceneManager::shift()
     changeScene = true;
 }
 
-IScene& SceneManager::begin()
-{
+IScene& SceneManager::begin() {
     return *scenes[0];
 }
 
-IScene& SceneManager::end()
-{
+IScene& SceneManager::end() {
     return *scenes[c_size - 1];
 }
 
-IScene* SceneManager::top()
-{
+IScene* SceneManager::top() {
     return &end();
 }
 
-void SceneManager::clear()
-{
-    for (size_t i = 0; i < c_size; i++)
-    {
-        if (scenes[i])
-        {
+void SceneManager::clear() {
+    for (size_t i = 0; i < c_size; i++) {
+        if (scenes[i]) {
             delete scenes[i];
             scenes[i] = nullptr;
             c_size--;
@@ -141,20 +114,16 @@ void SceneManager::clear()
     }
 }
 
-size_t SceneManager::sizeMax()
-{
+size_t SceneManager::sizeMax() {
     return m_size;
 }
 
-size_t SceneManager::size()
-{
+size_t SceneManager::size() {
     return c_size;
 }
 
-bool SceneManager::isChange()
-{
-    if (changeScene)
-    {
+bool SceneManager::isChange() {
+    if (changeScene) {
         changeScene = false;
         return true;
     }
@@ -163,15 +132,12 @@ bool SceneManager::isChange()
 
 ScnMgrDstr::~ScnMgrDstr() { delete p_instance; }
 
-void ScnMgrDstr::init(SceneManager* p)
-{
+void ScnMgrDstr::init(SceneManager* p) {
     p_instance = p;
 }
 
-SceneManager& SceneManager::getInstance()
-{
-    if (!_instance)
-    {
+SceneManager& SceneManager::getInstance() {
+    if (!_instance) {
         _instance = new SceneManager();
         destroyer.init(_instance);
     }

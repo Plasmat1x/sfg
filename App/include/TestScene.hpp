@@ -3,8 +3,7 @@
 #include <IScene.hpp>
 #include <SFML/Graphics.hpp>
 
-class TestScene : public IScene
-{
+class TestScene : public IScene {
 public:
     TestScene();
     ~TestScene();

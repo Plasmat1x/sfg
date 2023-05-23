@@ -3,10 +3,8 @@
 #include "Frame.hpp"
 #include "Flipbook.hpp"
 
-namespace anim
-{
-    class Animation
-    {
+namespace anim {
+    class Animation {
     public:
         Animation();
 

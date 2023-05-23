@@ -1,7 +1,6 @@
 #pragma once
 
-class IScene
-{
+class IScene {
 public:
     virtual void init() = 0;
     virtual void updateEvents() = 0;
