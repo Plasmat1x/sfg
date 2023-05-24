@@ -59,6 +59,9 @@ void TestScene::init() {
 
     p.Init(window->getView().getCenter(), sf::Vector2f(40, 180), texture);
     p.debug = true;
+
+    Level l;
+    l.init("../resources/maps/map2.tmx");
 }
 
 void TestScene::updateEvents() {

@@ -6,6 +6,7 @@ set(CMAKE_CXX_EXTENSIONS FALSE)
 project(level VERSION 0.1 LANGUAGES CXX)
 
 find_package(tinyxml2 CONFIG REQUIRED)
+find_package(SFML COMPONENTS graphics system window CONFIG REQUIRED)
 
 set(level_hpp
     include/Level.hpp
@@ -17,7 +18,7 @@ set(level_cpp
 
 add_library(level STATIC ${level_cpp} ${level_hpp})
 
-target_link_libraries(level PRIVATE tinyxml2::tinyxml2)
+target_link_libraries(level PRIVATE tinyxml2::tinyxml2 PUBLIC sfml-graphics)
 
 target_include_directories(level PRIVATE ./src)
 target_include_directories(level PUBLIC ./include)
