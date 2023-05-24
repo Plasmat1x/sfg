@@ -149,7 +149,6 @@ private:
         return sf::Color(r, g, b, a);
     }
 
-    //FIXME: map2 - incorrect draw, map3 - vector subscription out range
     //TODO: need logger
     void initLayers(XMLElement* root) {
 
@@ -161,55 +160,61 @@ private:
 
         //TODO: loop this for N layers
         e = e->FirstChildElement("layer");
-        Layer layer;
 
-        int width = 1;
-        int height = 1;
-        float opacity = 1.0f;
-        const char* tintcolor = "#ffffffff";
-        sf::Color color(255, 255, 255, 255);
-        e->QueryIntAttribute("width", &width);
-        e->QueryIntAttribute("height", &height);
-        e->QueryFloatAttribute("opacity", &opacity);
-        if (e->Attribute("tintcolor")) tintcolor = e->Attribute("tintcolor");
+        while (e) {
+            Layer layer;
 
-        layer.opacity = opacity;
-        color = hexToColor(tintcolor);
-        color.a = (int)(color.a * opacity);
-        layer.tintcolor = color;
+            int width = 1;
+            int height = 1;
+            float opacity = 1.0f;
+            const char* tintcolor = "#ffffffff";
+            sf::Color color(255, 255, 255, 255);
+            e->QueryIntAttribute("width", &width);
+            e->QueryIntAttribute("height", &height);
+            e->QueryFloatAttribute("opacity", &opacity);
+            if (e->Attribute("tintcolor")) tintcolor = e->Attribute("tintcolor");
 
-        XMLElement* _e = e->FirstChildElement("data");
-        std::vector<int> data = parseCSV(_e->GetText());
+            layer.opacity = opacity;
+            color = hexToColor(tintcolor);
+            color.a = (int)(color.a * opacity);
+            layer.tintcolor = color;
 
-        int x = 0;
-        int y = 0;
-        int i = 0;
+            XMLElement* _e = e->FirstChildElement("data");
+            std::vector<int> data = parseCSV(_e->GetText());
 
-        while (i < data.size()) {
-            if (x == width) {
-                x = 0;
-                y++;
+            int x = 0;
+            int y = 0;
+            int i = 0;
+
+            while (i < data.size()) {
+                if (x == width) {
+                    x = 0;
+                    y++;
+                }
+                int subToUse = 0;
+                subToUse = data[i] - firstTileID;
+                if (subToUse < 0) subToUse = 0;
+
+                sf::Sprite sprite;
+                sprite.setTexture(*texture);
+                sprite.setTextureRect(subRects[subToUse]);
+                sprite.setPosition((float)(x * tileSize.x), (float)(y * tileSize.y));
+                sprite.setColor(color);
+                layer.tiles.push_back(sprite);
+
+                x++;
+                i++;
             }
-            int subToUse = 0;
-            subToUse = data[i] - firstTileID;
-            if (subToUse < 0) subToUse = 0;
 
-            sf::Sprite sprite;
-            sprite.setTexture(*texture);
-            sprite.setTextureRect(subRects[subToUse]);
-            sprite.setPosition((float)(x * tileSize.x), (float)(y * tileSize.y));
-            sprite.setColor(color);
-            layer.tiles.push_back(sprite);
+            x = 0;
+            y = 0;
+            i = 0;
 
-            x++;
-            i++;
+            layers.push_back(layer);
+
+            e = e->NextSiblingElement("layer");
         }
 
-        x = 0;
-        y = 0;
-        i = 0;
-
-        layers.push_back(layer);
 
         //TODO: next iteration of loop
     }
