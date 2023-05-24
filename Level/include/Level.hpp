@@ -4,82 +4,45 @@
 #include<string>
 #include<tinyxml2.h>
 #include<stdlib.h>
+#include<sstream>
 
 using namespace tinyxml2;
 
-struct ImageInfo {
-    const char* source;
-    int width;
-    int height;
-}
-
-struct TileSetInfo {
-    int tilewidth;
-    int tileheight;
-    int tilecount;
-    int columns;
-}
-
-struct MapInfo {
-    int width;
-    int height;
-    int tilewidth;
-    int tileheight;
-}
-
-struct LayerInfo {
-    int id;
-    int width;
-    int height;
-    float opacity;
-    uint32_t tintcolor;
-}
-
-struct LayerCSV {
-    const char* data;
-}
-
-struct Object {
-    int id;
-    const char* name;
-    int x;
-    int y;
-    int width;
-    int height;
-}
-
-struct Tile {
-    int x;
-    int y;
-    int w;
-    int h;
-    int tx;
-    int ty;
-    int tw;
-    int th;
-}
-
-//TODO: csv/string parse
-/*
-tinyxml2::XMLDocument document;
-document.LoadFile("../resources/Maps/map2.tmx");
-std::string data = document.FirstChildElement("map")->FirstChildElement("layer")->FirstChildElement("data")->GetText();
-printf(data.c_str());
-*/
-
-std::vector<int> parseCVS(std::string string) {
-    int i, y = 0;
-    std::vector<int> res;
-}
-
 class Level {
 public:
-    void init(const char* FILE) {
+    Level();
+    ~Level();
 
+    void init(const char* FILE) {
+        document.LoadFile(FILE);
+
+        for (int i : parseCSV(getStringCSV())) {
+            printf("%d ", i);
+        }
     }
 
 private:
     std::vector<Tile> tiles;
     std::vector<Object> objects;
+    tinyxml2::XMLDocument document;
 
-}
+    std::string getStringCSV() {
+        std::string data = document.FirstChildElement("map")->FirstChildElement("layer")->FirstChildElement("data")->GetText();
+        return data;
+    }
+
+
+    std::vector<int> parseCSV(std::string string) {
+        std::vector<int> vect;
+
+        std::stringstream ss(string);
+
+        for (int i; ss >> i;) {
+            vect.push_back(i);
+            if (ss.peek() == ',')
+                ss.ignore();
+        }
+
+        return vect;
+    }
+};

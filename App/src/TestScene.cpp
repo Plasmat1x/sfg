@@ -8,10 +8,11 @@
 #include <vector>
 #include <Animator.hpp>
 #include <thread>
+#include <sstream>
+#include <string>
 
 #include <Player.hpp>
-
-#include <tinyxml2.h>
+#include <Level.hpp>
 
 extern sf::RenderWindow* window;
 extern sf::Event* event;
