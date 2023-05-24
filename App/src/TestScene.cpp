@@ -25,6 +25,7 @@ sf::RectangleShape vline;
 sf::RectangleShape hline;
 
 Player p;
+Level* l = nullptr;
 
 TestScene::TestScene() {
     init();
@@ -60,8 +61,7 @@ void TestScene::init() {
     p.Init(window->getView().getCenter(), sf::Vector2f(40, 180), texture);
     p.debug = true;
 
-    Level l;
-    //l.init("../resources/maps/map2.tmx");
+    l = new Level("map2.tmx");
 }
 
 void TestScene::updateEvents() {
@@ -122,6 +122,9 @@ void TestScene::render()
     window->draw(vline);
     window->draw(hline);
     window->draw(rect);
+
+    window->draw(*l);
+
     window->draw(p);
 
     window->setView(view2);
@@ -131,4 +134,5 @@ void TestScene::render()
 }
 
 void TestScene::cleanup() {
+    if (l) delete l;
 }

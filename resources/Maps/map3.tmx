@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="200" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="8">
  <tileset firstgid="1" source="../Tilesets/tileset1.tsx"/>
- <group id="2" name="BG">
+ <group id="2" name="bg">
   <imagelayer id="3" name="sky" parallaxx="0.1" parallaxy="0" repeatx="1">
    <image source="../Textures/sky.png" width="112" height="304"/>
   </imagelayer>
@@ -15,8 +15,8 @@
    <image source="../Textures/far-grounds.png" width="616" height="110"/>
   </imagelayer>
  </group>
- <group id="10" name="Objects">
-  <objectgroup id="9" name="physic objects"/>
+ <group id="10" name="objects">
+  <objectgroup id="9" name="physics"/>
  </group>
  <group id="11" name="tiles">
   <layer id="7" name="background" width="200" height="50">

@@ -3,33 +3,39 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "resources/Maps/map2.tmx",
+    "activeFile": "resources/Maps/map3.tmx",
     "expandedProjectPaths": [
-        "resources/Textures",
-        ".",
         "resources",
         "build/.cmake",
+        "resources/Maps",
+        "resources/Textures",
         "resources/Tilesets",
-        "resources/Maps"
+        "."
     ],
     "fileStates": {
         "resources/Maps/map1.tmx": {
-            "scale": 2,
-            "selectedLayer": 6,
+            "expandedGroupLayers": [
+                5,
+                71
+            ],
+            "scale": 0.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 753.25,
-                "y": 422
+                "x": 706,
+                "y": 164
             }
         },
         "resources/Maps/map2.tmx": {
-            "expandedObjectLayers": [
-                3
+            "expandedGroupLayers": [
+                5,
+                6,
+                4
             ],
-            "scale": 1.6328125,
-            "selectedLayer": 1,
+            "scale": 5.5,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 110.23923444976076,
-                "y": 75.94258373205741
+                "x": 84,
+                "y": 84.18181818181819
             }
         },
         "resources/Maps/map3.tmx": {
@@ -37,11 +43,11 @@
                 10,
                 11
             ],
-            "scale": 0.5,
-            "selectedLayer": 8,
+            "scale": 1,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": 1600,
-                "y": 400
+                "x": 1241,
+                "y": 291
             }
         },
         "resources/Textures/tileset1.tsx": {
@@ -70,9 +76,9 @@
     "project": "TiledTest.tiled-project",
     "recentFiles": [
         "resources/Maps/map2.tmx",
+        "resources/Maps/map1.tmx",
         "resources/Tilesets/tileset1.tsx",
         "resources/Maps/map3.tmx",
-        "resources/Maps/map1.tmx",
         "resources/Textures/tileset1.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
