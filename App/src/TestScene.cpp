@@ -61,7 +61,7 @@ void TestScene::init() {
     p.debug = true;
 
     Level l;
-    l.init("../resources/maps/map2.tmx");
+    //l.init("../resources/maps/map2.tmx");
 }
 
 void TestScene::updateEvents() {

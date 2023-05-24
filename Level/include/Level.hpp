@@ -12,7 +12,7 @@ using namespace tinyxml2;
 
 struct Layer {
     int opacity;
-    sf::Vector3i tintcolor;
+    sf::Color tintcolor;
     std::vector<sf::Sprite> tiles;
 };
 
@@ -84,7 +84,7 @@ private:
     }
 
     void initSubRects(const char* FILE) {
-        XMLDocument* doc;
+        XMLDocument* doc = nullptr;
         doc->LoadFile(FILE);
         texture = new sf::Texture;
         XMLElement* e = doc->FirstChildElement("tileset");
@@ -120,20 +120,32 @@ private:
 
     }
 
-    sf::Vector3i hexToVec3(const char* hexstring) {
-        int32_t hexdec;
+    sf::Color hexToVec3(const char* hexstring) {
+        uint32_t hexdec;
         std::stringstream ss(hexstring);
         if (ss.peek() == '#') ss.ignore();
         ss >> std::hex >> hexdec;
 
-        int r, g, b;
-        int bitmask = 255;
+        unsigned int r, g, b, a;
+        unsigned int bitmask = 255;
 
-        b = hexdec & bitmask;
-        g = (hexdec >> 8) & bitmask;
-        r = (hexdec >> 16) & bitmask;
+        if (((hexdec >> 24) & bitmask) > 0) {
 
-        return sf::Vector3i(r, g, b);
+            b = (hexdec >> 0) & bitmask;
+            g = (hexdec >> 8) & bitmask;
+            r = (hexdec >> 16) & bitmask;
+            a = (hexdec >> 24) & bitmask;
+        }
+        else {
+            b = (hexdec & bitmask);
+            g = (hexdec >> 8) & bitmask;
+            r = (hexdec >> 16) & bitmask;
+            a = 255;
+        }
+
+        printf("r = %d\ng = %d\nb = %d\na = %d\n", r, g, b, a);
+
+        return sf::Color(r, g, b, a);
     }
 };//class Level
 
