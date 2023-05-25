@@ -61,6 +61,8 @@ void TestScene::init() {
     p.Init(window->getView().getCenter(), sf::Vector2f(40, 180), texture);
     p.debug = true;
 
+    view.zoom(0.5f);
+
     l = new Level("map1.tmx");
 }
 

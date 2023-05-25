@@ -158,7 +158,6 @@ private:
             e = e->NextSiblingElement("group");
         }
 
-        //TODO: loop this for N layers
         e = e->FirstChildElement("layer");
 
         while (e) {
@@ -214,9 +213,6 @@ private:
 
             e = e->NextSiblingElement("layer");
         }
-
-
-        //TODO: next iteration of loop
     }
 };//class Level
 

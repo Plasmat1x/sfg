@@ -71,7 +71,10 @@ public:
         h = 240;
         cf = 6;
         sp = 8.3f;
-        scale = 1.f;
+        //scale = 1.f;
+        scale = .25f;
+        size.x = s.x * scale;
+        size.y = s.y * scale;
 
         sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(0, 0, w, h));
