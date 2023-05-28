@@ -5,13 +5,13 @@
   <imagelayer id="3" name="sky" parallaxx="0.1" parallaxy="0" repeatx="1">
    <image source="../Textures/sky.png" width="112" height="304"/>
   </imagelayer>
-  <imagelayer id="4" name="clouds" offsetx="0" offsety="68" parallaxx="0.2" parallaxy="0" repeatx="1">
+  <imagelayer id="4" name="clouds" offsetx="0" offsety="68" parallaxx="0.3" parallaxy="0" repeatx="1">
    <image source="../Textures/clouds.png" width="544" height="236"/>
   </imagelayer>
-  <imagelayer id="5" name="sea" offsetx="0" offsety="207" parallaxx="0.3" parallaxy="0" repeatx="1">
+  <imagelayer id="5" name="sea" offsetx="0" offsety="207" parallaxx="0.5" parallaxy="0" repeatx="1">
    <image source="../Textures/sea.png" width="112" height="96"/>
   </imagelayer>
-  <imagelayer id="6" name="ground" offsetx="0" offsety="194" parallaxx="0.8" parallaxy="0">
+  <imagelayer id="6" name="ground" offsetx="0" offsety="194" parallaxx="0.9" parallaxy="0">
    <image source="../Textures/far-grounds.png" width="616" height="110"/>
   </imagelayer>
  </group>

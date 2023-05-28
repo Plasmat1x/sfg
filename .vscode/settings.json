@@ -69,7 +69,8 @@
         "sstream": "cpp",
         "stop_token": "cpp",
         "thread": "cpp",
-        "unordered_map": "cpp"
+        "unordered_map": "cpp",
+        "cstdarg": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

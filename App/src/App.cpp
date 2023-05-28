@@ -4,14 +4,11 @@
 #include <imgui-SFML.h>
 #include <SceneManager.hpp>
 #include "app.hpp"
-#include "TestScene.hpp"
 
 extern sf::RenderWindow* window = nullptr;
 extern sf::Event* event = nullptr;
 
 int App::run() {
-
-    init();
 
     while (window->isOpen()) {
         timerStart();
@@ -36,11 +33,8 @@ void App::cleanup() {
 
 void App::init() {
     resolution = sf::Vector2u(1280, 720);
-    view.setSize(resolution.x, resolution.y);
-    view.setCenter(resolution.x / 2.f, resolution.y / 2.f);
 
     window = new sf::RenderWindow(sf::VideoMode(resolution.x, resolution.y), "sfg", sf::Style::Default);
-    window->setView(view);
     window->setFramerateLimit(144);
     color[0] = .5f;
     color[1] = .5f;
@@ -60,7 +54,7 @@ void App::init() {
     ImDebugShow = true;
     ImControll = false;
 
-    SceneManager::push(new TestScene);
+
 }
 
 void App::updateWindow() {
@@ -71,10 +65,6 @@ void App::updateWindow() {
             window->close();
             break;
         case sf::Event::Resized:
-            resolution = window->getSize();
-            view.setCenter(resolution.x / 2.0f, resolution.y / 2.0f);
-            view.setSize(resolution.x, resolution.y);
-            window->setView(view);
             break;
 
         case sf::Event::KeyPressed:
@@ -188,7 +178,6 @@ void App::updatePast() {
 }
 
 void App::render() {
-    window->setView(view);
     window->clear(WindowCollor);
     SceneManager::top()->render();
     ImGui::SFML::Render(*window);

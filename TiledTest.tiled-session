@@ -3,14 +3,14 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "resources/Maps/map3.tmx",
+    "activeFile": "resources/Maps/map1.tmx",
     "expandedProjectPaths": [
         "resources",
+        "resources/Textures",
+        ".",
         "build/.cmake",
         "resources/Maps",
-        "resources/Textures",
-        "resources/Tilesets",
-        "."
+        "resources/Tilesets"
     ],
     "fileStates": {
         "resources/Maps/map1.tmx": {
@@ -18,36 +18,37 @@
                 5,
                 71
             ],
-            "scale": 0.5,
-            "selectedLayer": 4,
+            "scale": 1,
+            "selectedLayer": 11,
             "viewCenter": {
-                "x": 706,
-                "y": 164
+                "x": 714,
+                "y": 5
             }
         },
         "resources/Maps/map2.tmx": {
             "expandedGroupLayers": [
-                5,
                 6,
-                4
+                4,
+                5
             ],
-            "scale": 5.5,
-            "selectedLayer": 4,
+            "scale": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 84,
-                "y": 84.18181818181819
+                "x": 80,
+                "y": 80
             }
         },
         "resources/Maps/map3.tmx": {
             "expandedGroupLayers": [
-                10,
-                11
+                11,
+                2,
+                10
             ],
             "scale": 1,
             "selectedLayer": 10,
             "viewCenter": {
-                "x": 1241,
-                "y": 291
+                "x": 1634,
+                "y": 400
             }
         },
         "resources/Textures/tileset1.tsx": {
@@ -71,14 +72,15 @@
     "openFiles": [
         "resources/Tilesets/tileset1.tsx",
         "resources/Maps/map3.tmx",
-        "resources/Maps/map2.tmx"
+        "resources/Maps/map2.tmx",
+        "resources/Maps/map1.tmx"
     ],
     "project": "TiledTest.tiled-project",
     "recentFiles": [
-        "resources/Maps/map2.tmx",
-        "resources/Maps/map1.tmx",
         "resources/Tilesets/tileset1.tsx",
         "resources/Maps/map3.tmx",
+        "resources/Maps/map2.tmx",
+        "resources/Maps/map1.tmx",
         "resources/Textures/tileset1.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

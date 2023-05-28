@@ -1,10 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <IScene.hpp>
 
 class App {
 public:
     int run();
+    void init();
 
 private:
     sf::Clock clock;
@@ -15,7 +17,6 @@ private:
     sf::Time lag;
     const sf::Time MS_PER_UPDATE = sf::milliseconds(16);
 
-    sf::View view;
     sf::Event event;
     sf::Vector2u resolution;
     float color[4];
@@ -26,7 +27,7 @@ private:
 
     void timerStart();
     void cleanup();
-    void init();
+
     void updateWindow();
     void updateInput();
     void updateFixed();

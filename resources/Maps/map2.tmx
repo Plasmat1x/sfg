@@ -7,7 +7,7 @@
   </imagelayer>
  </group>
  <group id="6" name="objects">
-  <objectgroup id="3" name="object1">
+  <objectgroup id="3" name="object1" class="obstacle">
    <object id="1" name="ground" x="32" y="64" width="80" height="48"/>
   </objectgroup>
  </group>
