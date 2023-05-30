@@ -153,6 +153,30 @@ void MapParser::parseGroups(XMLElement* root) {
     }
 }
 void MapParser::parseObjects(XMLElement* root) {
+    /*
+    ...
+ <group id="72" name="objects">
+  <objectgroup color="#ff0000" id="70" name="objects">
+   <object id="21" name="Rectangle" type="rectangle" x="16" y="144" width="176" height="96"/>
+   <object id="22" name="Point" type="point" x="224" y="176">
+    <point/>
+   </object>
+   <object id="23" name="Elipse" type="elipse" x="256" y="144" width="48" height="48">
+    <ellipse/>
+   </object>
+   <object id="24" name="Polygon" type="polygon" x="384" y="144">
+    <polygon points="0,0 -32,48 32,48"/>
+   </object>
+   <object id="28" name="Text" type="text" x="432" y="176" width="80" height="17.875">
+    <text wrap="1">Hello World</text>
+   </object>
+   <object id="30" name="Tile" type="tile" gid="468" x="480" y="144" width="16" height="16"/>
+   </object>
+  </objectgroup>
+ </group>
+    ...
+    */
+
     XMLElement* e = root;
 
     while (e) {
@@ -167,6 +191,14 @@ void MapParser::parseObjects(XMLElement* root) {
     }
 }
 void MapParser::parseImages(XMLElement* root) {
+
+    /*
+    ...
+ <group id="5" name="bg" locked="1">
+  <imagelayer id="69" name="sky" locked="1" parallaxx="0.5" parallaxy="0.8" repeatx="1">
+   <image source="../Textures/sky.png" width="112" height="304"/>
+    ...
+    */
 
     XMLElement* e = root;
 
@@ -241,6 +273,15 @@ void MapParser::parseImages(XMLElement* root) {
 }
 
 void MapParser::parseTiles(XMLElement* root) {
+    /*
+    ...
+ <group id="71" name="tiles" locked="1">
+  <layer id="1" name="background" width="68" height="31" locked="1" tintcolor="#9a9a9a">
+   <data encoding="csv">
+0,0,0,0,0,0,0,0,0 ...
+    ...
+    */
+
 
     XMLElement* e = root;
 
