@@ -25,6 +25,8 @@ sf::RectangleShape vline;
 sf::RectangleShape hline;
 sf::CircleShape dot;
 
+sf::ConvexShape convex;
+
 Player p;
 Level* l = nullptr;
 
@@ -67,6 +69,19 @@ void TestScene::init() {
     view.zoom(1.0f);
     l = new Level();
     l->init("map1.tmx", &view);
+
+    convex.setPointCount(7);
+    convex.setFillColor(sf::Color(255, 0, 0, 255 * 0.5f));
+    convex.setOutlineColor(sf::Color(255, 0, 0, 255 * 1.0f));
+    convex.setOutlineThickness(1.f);
+    convex.setPoint(0, sf::Vector2f(0, 0));
+    convex.setPoint(1, sf::Vector2f(80, 0));
+    convex.setPoint(2, sf::Vector2f(80, 32));
+    convex.setPoint(3, sf::Vector2f(64, 48));
+    convex.setPoint(4, sf::Vector2f(48, 64));
+    convex.setPoint(5, sf::Vector2f(16, 48));
+    convex.setPoint(6, sf::Vector2f(0, 32));
+    convex.setPosition(sf::Vector2f(672, 224));
 }
 
 void TestScene::updateEvents() {
@@ -179,6 +194,8 @@ void TestScene::render()
     window->draw(p);
 
     window->draw(dot);
+
+    window->draw(convex);
 
     window->setView(viewUI);
     window->draw(vline);

@@ -5,12 +5,12 @@
     },
     "activeFile": "resources/Maps/map1.tmx",
     "expandedProjectPaths": [
-        ".",
         "resources/Maps",
-        "build/.cmake",
         "resources/Tilesets",
-        "resources/Textures",
-        "resources"
+        "resources",
+        "build/.cmake",
+        ".",
+        "resources/Textures"
     ],
     "fileStates": {
         "resources/Maps/map1.tmx": {
@@ -22,10 +22,10 @@
                 72
             ],
             "scale": 2,
-            "selectedLayer": 4,
+            "selectedLayer": 10,
             "viewCenter": {
-                "x": -2,
-                "y": 209.5
+                "x": 379.5,
+                "y": 208.5
             }
         },
         "resources/Maps/map2.tmx": {

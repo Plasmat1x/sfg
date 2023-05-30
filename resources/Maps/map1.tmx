@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-up" width="68" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="73" nextobjectid="31">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-up" width="68" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="73" nextobjectid="32">
  <tileset firstgid="1" source="../Tilesets/tileset1.tsx"/>
  <group id="5" name="bg" locked="1">
   <imagelayer id="69" name="sky" locked="1" parallaxx="0.5" parallaxy="0.8" repeatx="1">
@@ -122,8 +122,8 @@
 </data>
   </layer>
  </group>
- <group id="72" name="objects" locked="1">
-  <objectgroup color="#ff0000" id="70" name="objects" locked="1">
+ <group id="72" name="objects">
+  <objectgroup color="#ff0000" id="70" name="objects">
    <object id="21" name="Rectangle" x="16" y="144" width="176" height="96"/>
    <object id="22" name="Point" x="224" y="176">
     <point/>
@@ -138,6 +138,9 @@
     <text wrap="1">Hello World</text>
    </object>
    <object id="30" name="Tile" gid="468" x="480" y="144" width="16" height="16"/>
+   <object id="31" x="672" y="224">
+    <polygon points="0,0 80,0 80,32 64,48 48,64 16,48 0,32"/>
+   </object>
   </objectgroup>
  </group>
 </map>
