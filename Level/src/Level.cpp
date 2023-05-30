@@ -30,7 +30,7 @@ void Level::cleanup() {
 
 void Level::draw(sf::RenderTarget& tg, sf::RenderStates state) const {
     for (auto B : backgrounds) {
-        tg.draw(*B);
+        B->draw(tg, *view);
     }
 
     for (TileLayer L : layers) {
@@ -46,9 +46,7 @@ void Level::setView(sf::View* view) {
 }
 
 void Level::update() {
-    for (auto B : backgrounds) {
-        B->update(view);
-    }
+
 }
 
 //TODO: need logger

@@ -5,24 +5,27 @@
     },
     "activeFile": "resources/Maps/map1.tmx",
     "expandedProjectPaths": [
-        "resources",
-        "resources/Textures",
         ".",
-        "build/.cmake",
         "resources/Maps",
-        "resources/Tilesets"
+        "build/.cmake",
+        "resources/Tilesets",
+        "resources/Textures",
+        "resources"
     ],
     "fileStates": {
         "resources/Maps/map1.tmx": {
             "expandedGroupLayers": [
-                5,
-                71
+                72
             ],
-            "scale": 1,
-            "selectedLayer": 11,
+            "expandedObjectLayers": [
+                70,
+                72
+            ],
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 714,
-                "y": 5
+                "x": -2,
+                "y": 209.5
             }
         },
         "resources/Maps/map2.tmx": {
@@ -34,8 +37,8 @@
             "scale": 3,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 80,
-                "y": 80
+                "x": 145,
+                "y": 85.33333333333334
             }
         },
         "resources/Maps/map3.tmx": {
@@ -47,8 +50,8 @@
             "scale": 1,
             "selectedLayer": 10,
             "viewCenter": {
-                "x": 1634,
-                "y": 400
+                "x": 1906,
+                "y": 522
             }
         },
         "resources/Textures/tileset1.tsx": {
@@ -71,16 +74,14 @@
     "map.width": 200,
     "openFiles": [
         "resources/Tilesets/tileset1.tsx",
-        "resources/Maps/map3.tmx",
-        "resources/Maps/map2.tmx",
         "resources/Maps/map1.tmx"
     ],
     "project": "TiledTest.tiled-project",
     "recentFiles": [
         "resources/Tilesets/tileset1.tsx",
+        "resources/Maps/map1.tmx",
         "resources/Maps/map3.tmx",
         "resources/Maps/map2.tmx",
-        "resources/Maps/map1.tmx",
         "resources/Textures/tileset1.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

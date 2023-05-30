@@ -25,13 +25,10 @@ sf::RectangleShape vline;
 sf::RectangleShape hline;
 sf::CircleShape dot;
 
-sf::RectangleShape r1;
-sf::RectangleShape r2;
-
 Player p;
 Level* l = nullptr;
 
-std::queue<sf::RectangleShape*> q;
+sf::Vector2f mousePos;
 
 TestScene::TestScene() {
     init();
@@ -70,26 +67,30 @@ void TestScene::init() {
     view.zoom(1.0f);
     l = new Level();
     l->init("map1.tmx", &view);
-
-    r1.setSize(sf::Vector2f(100.0f, 80.0f));
-    r1.setPosition(0.0f, 0.0f);
-    r1.setOutlineColor(sf::Color::Red);
-    r1.setOutlineThickness(1.f);
-
-    r2.setSize(sf::Vector2f(100.0f, 80.0f));
-    r2.setPosition(r1.getSize().x, 0);
-    r2.setOutlineColor(sf::Color::Red);
-    r2.setOutlineThickness(1.f);
-
-    q.push(&r1);
-    q.push(&r2);
 }
 
 void TestScene::updateEvents() {
+    switch (event->type)
+    {
+    case sf::Event::Resized:
 
+        view.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+        viewUI.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+        break;
+
+    case sf::Event::KeyReleased:
+        if (event->key.code == sf::Keyboard::T) {
+            p.position = mousePos;
+        }
+        break;
+    default:
+        break;
+    }
 }
 
 void TestScene::updateInput() {
+    mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window), view);
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         p.Climb();
         p.position.y = p.position.y - 1.f;
@@ -127,7 +128,6 @@ void TestScene::update(const float& dt) {
 
 void TestScene::updatePast(const float& dt) {
     p.setCam(&view);
-    l->update();
 }
 
 void TestScene::updateFixed() {
@@ -147,23 +147,38 @@ void TestScene::debug(const float& dt) {
     ImGui::Text("View: width = %.1f, height = %.1f", viewUI.getSize().x, viewUI.getSize().y);
     ImGui::Text("View center: x = %.1f, y = %.1f", viewUI.getCenter().x, viewUI.getCenter().y);
 
+    ImGui::SeparatorText("window view");
+
+    ImGui::Text("View: width = %.1f, height = %.1f", window->getView().getSize().x, window->getView().getSize().y);
+    ImGui::Text("View center: x = %.1f, y = %.1f", window->getView().getCenter().x, window->getView().getCenter().y);
+
+    if (ImGui::Button("+")) { view.zoom(0.5f); }
+    ImGui::SameLine();
+    if (ImGui::Button("-")) { view.zoom(2.0f); }
+
+
+
+    ImGui::Text("mouse pos: %.1f x %.1f",
+                mousePos.x,
+                mousePos.y);
+
     ImGui::End();
 }
 
 void TestScene::render()
 {
+
     window->setView(view);
-    window->draw(dot);
+
     window->draw(vline);
     window->draw(hline);
 
     window->draw(*l);
 
     window->setView(view);
-    window->draw(*q.front());
-    window->draw(*q.back());
     window->draw(p);
 
+    window->draw(dot);
 
     window->setView(viewUI);
     window->draw(vline);
@@ -174,3 +189,5 @@ void TestScene::render()
 void TestScene::cleanup() {
     if (l) delete l;
 }
+
+

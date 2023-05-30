@@ -147,8 +147,8 @@ void MapParser::parseImages(XMLElement* root) {
 
     while (e) {
 
-        int width = 1;
-        int height = 1;
+        int width = 0;
+        int height = 0;
         float opacity = 1.0f;
         float offsetx = 0.f;
         float offsety = 0.f;
@@ -170,9 +170,16 @@ void MapParser::parseImages(XMLElement* root) {
 
         XMLElement* _e = e->FirstChildElement();
         std::string PF = PATH + _e->Attribute("source");
+        _e->QueryIntAttribute("width", &width);
+        _e->QueryIntAttribute("height", &height);
 
+        int res_width = 0;
 
-        level->backgrounds.push_back(new InfScroller(
+        while (level->view->getSize().x > res_width)
+            res_width += width;
+
+        /*
+        level->backgrounds.push_back(
             new Background(
                 level->view->getSize().x,
                 level->view->getSize().y,
@@ -185,7 +192,24 @@ void MapParser::parseImages(XMLElement* root) {
                 repeaty,
                 color,
                 PF
-            ), level->view));
+            ));
+        */
+
+        Background bg(
+            //level->view->getSize().x,
+            res_width,
+            level->view->getSize().y,
+            opacity,
+            offsetx,
+            offsety,
+            parallaxx,
+            parallaxy,
+            repeatx,
+            repeaty,
+            color,
+            PF);
+
+        level->backgrounds.push_back(new PairBG(bg));
 
         e = e->NextSiblingElement("imagelayer");
     }

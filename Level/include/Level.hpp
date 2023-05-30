@@ -12,7 +12,6 @@
 
 #include"Layer.hpp"
 #include"Background.hpp"
-#include"InfScroller.hpp"
 
 class MapParser;
 
@@ -36,8 +35,8 @@ private:
     sf::Texture* texture;
 
     std::vector<TileLayer> layers;
-    //FIXME: when use direct pushback bgs errors;
-    std::vector<InfScroller*> backgrounds;
+    //std::vector<Background*> backgrounds;
+    std::vector<PairBG*> backgrounds;
 
     friend class MapParser;
 };

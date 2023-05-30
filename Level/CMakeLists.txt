@@ -12,14 +12,12 @@ set(level_hpp
     include/Level.hpp
     include/MapParser.hpp
     include/Background.hpp
-    include/InfScroller.hpp
 )
 
 set(level_cpp
     src/Level.cpp
     src/MapParser.cpp
     src/Background.cpp
-    src/InfScroller.cpp
 )
 
 add_library(level STATIC ${level_cpp} ${level_hpp})
