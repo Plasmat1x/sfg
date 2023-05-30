@@ -17,6 +17,21 @@ std::vector<int> parseCSV(std::string str) {
     return vect;
 }
 
+std::vector<Point> parsePoints(std::string string) {
+    std::vector<Point> res;
+    std::stringstream ss(string);
+
+    while (ss.peek() != EOF) {
+        Point point;
+        ss >> point.x;
+        ss.ignore();
+        ss >> point.y;
+        res.push_back(point);
+    }
+
+    return res;
+}
+
 sf::Color hexToColor(const char* hexstring) {
     uint32_t hexdec;
     std::stringstream ss(hexstring);
