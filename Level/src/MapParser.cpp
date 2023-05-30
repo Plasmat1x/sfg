@@ -153,11 +153,21 @@ void MapParser::parseGroups(XMLElement* root) {
     }
 }
 void MapParser::parseObjects(XMLElement* root) {
+    XMLElement* e = root;
 
+    while (e) {
+        int id;
+        float x;
+        float y;
+        float width;
+        float height;
+        std::string type;
+        int gid;
+
+    }
 }
 void MapParser::parseImages(XMLElement* root) {
 
-    //TODO: need rework image layer
     XMLElement* e = root;
 
     while (e) {
