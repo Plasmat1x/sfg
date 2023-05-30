@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.tsx": "xml",
         "*.rh": "cpp",
         "algorithm": "cpp",
         "atomic": "cpp",
@@ -56,10 +57,20 @@
         "xutility": "cpp",
         "list": "cpp",
         "xhash": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "fstream": "cpp",
         "functional": "cpp",
-        "unordered_map": "cpp",
+        "iomanip": "cpp",
+        "queue": "cpp",
+        "ranges": "cpp",
         "ratio": "cpp",
+        "span": "cpp",
+        "sstream": "cpp",
         "stop_token": "cpp",
-        "thread": "cpp"
-    }
+        "thread": "cpp",
+        "unordered_map": "cpp",
+        "cstdarg": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
