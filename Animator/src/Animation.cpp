@@ -2,6 +2,7 @@
 
 namespace anim {
     Animation::Animation() {
+        isPlayed = false;
         looped = false;
         flip_h = false;
         flip_v = false;
@@ -39,11 +40,14 @@ namespace anim {
     }
 
     bool Animation::next() {
-        nCurrentFrame++;
+        isPlayed = true;
+        //nCurrentFrame++;
         if (nCurrentFrame >= flipbook->size())
             if (!looped) {
                 nCurrentFrame = flipbook->size() - 1;
-                return false;
+                isPlayed = false;
+                timer = 0.f;
+                return isPlayed;
             }
             else {
                 nCurrentFrame = 0;
@@ -51,14 +55,18 @@ namespace anim {
 
         currentFrame = &flipbook->frames()[nCurrentFrame];
         timer = 0.f;
-        return true;
+        nCurrentFrame++;
+        return isPlayed;
     }
     bool Animation::prev() {
-        nCurrentFrame--;
+        isPlayed = true;
+        //nCurrentFrame--;
         if (nCurrentFrame < 0)
             if (!looped) {
                 nCurrentFrame = 0;
-                return false;
+                isPlayed = false;
+                timer = 0.f;
+                return isPlayed;
             }
             else {
                 nCurrentFrame = flipbook->size() - 1;
@@ -66,24 +74,33 @@ namespace anim {
 
         currentFrame = &flipbook->frames()[nCurrentFrame];
         timer = 0.f;
-        return true;
+        nCurrentFrame--;
+        return isPlayed;
     }
     bool Animation::playForward(const float& dt) {
+        if (!isPlayed) {
+            nCurrentFrame = 0;
+            isPlayed = true;
+        }
+
         timer += dt;
         while (frequence < timer) {
             return next();
         }
-        return true;
+        return isPlayed;
     }
     bool Animation::playBackward(const float& dt) {
         timer += dt;
         while (frequence < timer) {
             return prev();
         }
-        return true;
+        return isPlayed;
     }
     Frame* Animation::getCurrentFrame() {
         return currentFrame;
+    }
+    bool Animation::isPlay() const {
+        return isPlayed;
     }
     bool Animation::isLooped() const {
         return looped;
@@ -93,6 +110,9 @@ namespace anim {
     }
     bool Animation::isFlipV() const {
         return flip_v;
+    }
+    void Animation::setLoop(bool loop) {
+        this->looped = loop;
     }
     void Animation::setSpeed(const float& speed) {
         this->speed = speed;

@@ -26,6 +26,7 @@ sf::RectangleShape hline;
 sf::CircleShape dot;
 
 sf::ConvexShape convex;
+float rotation;
 
 Player p;
 Level* l = nullptr;
@@ -63,10 +64,10 @@ void TestScene::init() {
     dot.setRadius(5);
     dot.setFillColor(sf::Color::Black);
 
-    p.Init(sf::Vector2f(0, 0), sf::Vector2f(40, 180), texture);
-    p.debug = true;
+    p.Init(sf::Vector2f(-1280, 190), sf::Vector2f(40, 180), texture, new IdleState);
+    p.debug = false;
 
-    view.zoom(1.0f);
+    view.zoom(0.5f);
     l = new Level();
     l->init("map1.tmx", &view);
 
@@ -82,6 +83,8 @@ void TestScene::init() {
     convex.setPoint(5, sf::Vector2f(16, 48));
     convex.setPoint(6, sf::Vector2f(0, 32));
     convex.setPosition(sf::Vector2f(672, 224));
+    convex.setOrigin(sf::Vector2f(convex.getLocalBounds().width * 0.5f, convex.getLocalBounds().height * 0.5f));
+    convex.setPosition(sf::Vector2f(convex.getGlobalBounds().left + convex.getGlobalBounds().width, convex.getGlobalBounds().top + convex.getGlobalBounds().height));
 }
 
 void TestScene::updateEvents() {
@@ -106,27 +109,35 @@ void TestScene::updateEvents() {
 void TestScene::updateInput() {
     mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window), view);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        p.Climb();
-        p.position.y = p.position.y - 1.f;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        p.direction = Player::Direction::LEFT;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+        p.dir = Player::Dir::left;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            p.Jump();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+            p.Roll();
+        }
         p.Move();
-        p.position.x = p.position.x - 1.f;
+        p.position.x -= 1.0f;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+        p.dir = Player::Dir::right;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            p.Jump();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+            p.Roll();
+        }
+        p.Move();
+        p.position.x += 1.0f;
+    }
+    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+        p.Jump();
+        p.position.y -= 1.0f;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         p.Fall();
-        p.position.y = p.position.y + 1.f;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        p.direction = Player::Direction::RIGHT;
-        p.Move();
-        p.position.x = p.position.x + 1.f;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        p.Jump();
-
+        p.position.y += 1.0f;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
         p.Roll();
@@ -134,6 +145,7 @@ void TestScene::updateInput() {
     else {
         p.Idle();
     }
+
 }
 
 void TestScene::update(const float& dt) {
@@ -171,13 +183,13 @@ void TestScene::debug(const float& dt) {
     ImGui::SameLine();
     if (ImGui::Button("-")) { view.zoom(2.0f); }
 
-
-
     ImGui::Text("mouse pos: %.1f x %.1f",
                 mousePos.x,
                 mousePos.y);
 
     ImGui::End();
+
+    p.Debug();
 }
 
 void TestScene::render()

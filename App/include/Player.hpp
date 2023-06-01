@@ -8,8 +8,94 @@
 
 using namespace anim;
 
+class Player;
+
+class State {
+protected:
+    Player* player;
+
+public:
+    virtual ~State() {
+
+    }
+
+    void setPlayer(Player* p) {
+        this->player = p;
+    }
+
+    virtual void Move() = 0;
+    virtual void Jump() = 0;
+    virtual void Roll() = 0;
+    virtual void Fall() = 0;
+    virtual void Idle() = 0;
+    virtual void Climb() = 0;
+};
+
+class IdleState : public State {
+public:
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+};
+class MoveState : public State {
+public:
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+};
+class JumpState : public State {
+public:
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+};
+
+class FallState : public State {
+public:
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+};
+class ClimbState : public State {
+public:
+
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+};
+class RollState : public State {
+public:
+    void Idle() override;
+    void Move() override;
+    void Jump() override;
+    void Fall() override;
+    void Climb() override;
+    void Roll() override;
+
+};
+
 class Player : public sf::Drawable {
 public:
+
+    enum Dir {
+        right,
+        left
+    };
 
     Animator animator;
     sf::Sprite sprite;
@@ -19,46 +105,27 @@ public:
     sf::Vector2f position;
     sf::Vector2f size;
 
-    sf::View view;
-
     bool debug;
 
-    enum State {
-        IDLE,
-        MOVE,
-        JUMP,
-        FALL,
-        CLIMB,
-        ROLL
-    };
+    State* state;
 
-    enum Direction {
-        RIGHT,
-        LEFT
-    };
-
-    State state;
-    Direction direction;
-
+    Dir dir;
 
     Player() {
 
     }
 
-    Player(sf::Vector2f p, sf::Vector2f s, sf::Texture t) {
-        state = State::IDLE;
-        direction = Direction::RIGHT;
-        Init(p, s, t);
+    Player(sf::Vector2f p, sf::Vector2f s, sf::Texture t, State* state) {
+        Init(p, s, t, state);
     }
 
     ~Player() {
-
+        cleanup();
     }
 
-    void Init(sf::Vector2f p, sf::Vector2f s, sf::Texture t) {
-        state = State::IDLE;
-        direction = Direction::RIGHT;
+    void Init(sf::Vector2f p, sf::Vector2f s, sf::Texture t, State* state) {
 
+        dir = Dir::right;
         texture = t;
         position = p;
         size = s;
@@ -86,13 +153,15 @@ public:
         animator.addAnimation("FALL", new Animation(0, 3, w, h, cf - 2, sp));
         animator.addAnimation("CLIMB", new Animation(0, 4, w, h, cf, sp));
         animator.addAnimation("ROLL", new Animation(0, 5, w, h, cf + 1, sp));
+
+        animator.getAnimation("ROLL")->setLoop(false);
+
+        animator.setAnimation("IDLE");
+
+        setState(state);
     }
 
     void Update(const float& dt) {
-        _size = size;
-        if (state == State::ROLL)
-            _size.y = size.y * 0.5f;
-
         rect.setSize(_size);
         rect.setOrigin(_size.x * 0.5f, _size.y);
         rect.setPosition(position);
@@ -107,66 +176,47 @@ public:
         if (debug)
         {
             target.draw(rect);
-            Debug();
         }
     }
 
-    void Cleanup() {
-
+    void cleanup() {
+        if (state) delete state;
     }
-
-    //TODO:State pattern
 
     void Move() {
-        if (state != State::MOVE) {
-            state = State::MOVE;
-            animator.getAnimation()->reset();
-            animator.setAnimation("MOVE");
-        }
+        state->Move();
     }
 
     void Jump() {
-        if (state != State::JUMP) {
-            state = State::JUMP;
-            animator.getAnimation()->reset();
-            animator.setAnimation("JUMP");
-        }
+        state->Jump();
     }
 
     void Fall() {
-        if (state != State::FALL) {
-            state = State::FALL;
-            animator.getAnimation()->reset();
-            animator.setAnimation("FALL");
-        }
+        state->Fall();
     }
 
     void Roll() {
-        if (state != State::ROLL) {
-            state = State::ROLL;
-            animator.getAnimation()->reset();
-            animator.setAnimation("ROLL");
-        }
+        state->Roll();
     }
 
     void Climb() {
-        if (state != State::CLIMB) {
-            state = State::CLIMB;
-            animator.getAnimation()->reset();
-            animator.setAnimation("CLIMB");
-        }
+        state->Climb();
     }
 
     void Idle() {
-        if (state != State::IDLE) {
-            state = State::IDLE;
-            animator.getAnimation()->reset();
-            animator.setAnimation("IDLE");
-        }
+        state->Idle();
     }
 
-    void Debug() const {
+    void setState(State* state) {
+        if (this->state) delete this->state;
+
+        this->state = state;
+        this->state->setPlayer(this);
+    }
+
+    void Debug() {
         ImGui::Begin("Player object");
+        ImGui::Checkbox("Debug frame", &debug);
 
         ImGui::SeparatorText("Sprite::Texture");
         ImGui::Text("x = %d\ny = %d\nwidth = %d\nheight = %d",
@@ -203,22 +253,22 @@ public:
                     rect.getGlobalBounds().height
         );
 
+        if (ImGui::Button("Force IDLE state")) {
+            setState(new IdleState);
+        }
+
         ImGui::End();
     }
 
     void UpdateAnimation(const float& dt) {
-        if (animator.getAnimation() != nullptr) {
+        animator.getAnimation()->playForward(dt);
 
-            if (direction == Direction::LEFT) {
-                animator.getAnimation()->setFlipH(true);
-            }
-            else if (direction == Direction::RIGHT) {
-                animator.getAnimation()->setFlipH(false);
-            }
-
-            animator.getAnimation()->playForward(dt);
+        if (dir == Dir::left) {
+            sprite.setTextureRect(sf::IntRect(animator.getFrame()->x + animator.getFrame()->w, animator.getFrame()->y, -animator.getFrame()->w, animator.getFrame()->h));
         }
-        sprite.setTextureRect(intrect(*animator.getFrame()));
+        else {
+            sprite.setTextureRect(intrect(*animator.getFrame()));
+        }
     }
 
     sf::Vector2f getCamPivot() {
@@ -254,3 +304,115 @@ private:
         return _r;
     }
 };
+
+
+
+void IdleState::Idle() {
+    if (player->animator.getAnimation() != nullptr) {
+        player->animator.setAnimation("IDLE");
+    }
+
+}
+void IdleState::Move() {
+    player->setState(new MoveState);
+}
+void IdleState::Jump() {
+    player->setState(new JumpState);
+}
+void IdleState::Fall() {
+
+}
+void IdleState::Climb() {
+
+}
+void IdleState::Roll() {
+    player->setState(new RollState);
+}
+
+
+void MoveState::Idle() {
+    player->setState(new IdleState);
+}
+void MoveState::Move() {
+    player->animator.setAnimation("MOVE");
+}
+void MoveState::Jump() {
+    player->setState(new JumpState);
+}
+void MoveState::Fall() {
+
+}
+void MoveState::Climb() {
+
+}
+void MoveState::Roll() {
+    player->setState(new RollState);
+}
+
+
+void JumpState::Idle() {
+
+}
+void JumpState::Move() {
+
+}
+void JumpState::Jump() {
+    player->animator.setAnimation("JUMP");
+}
+void JumpState::Fall() {
+    player->setState(new FallState);
+}
+void JumpState::Climb() {
+
+}
+void JumpState::Roll() {
+
+}
+
+void FallState::Idle() {
+    player->setState(new IdleState);
+}
+void FallState::Move() {
+
+}
+void FallState::Jump() {
+
+}
+void FallState::Fall() {
+    player->animator.setAnimation("FALL");
+}
+void FallState::Climb() {
+
+}
+void FallState::Roll() {
+
+}
+
+
+
+void RollState::Idle() {
+    if (!player->animator.getAnimation()->isPlay()) {
+        player->setState(new IdleState);
+    }
+}
+void RollState::Move() {
+    if (!player->animator.getAnimation()->isPlay()) {
+        player->setState(new IdleState);
+    }
+}
+void RollState::Jump() {
+
+}
+void RollState::Fall() {
+
+}
+void RollState::Climb() {
+
+}
+void RollState::Roll() {
+    player->animator.setAnimation("ROLL");
+
+    if (!player->animator.getAnimation()->isPlay()) {
+        player->setState(new IdleState);
+    }
+}

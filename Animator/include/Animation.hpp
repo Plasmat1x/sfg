@@ -54,6 +54,10 @@ namespace anim {
         /// @return ref of Frame
         Frame* getCurrentFrame();
 
+        /// @brief return isPlayed animation
+        /// @return bool
+        bool isPlay() const;
+
         /// @brief return status of flag
         /// @return Animation::looped
         bool isLooped() const;
@@ -69,6 +73,10 @@ namespace anim {
         /// @brief set speed animation in frame per second
         /// @param speed - fps
         void setSpeed(const float& speed);
+
+        /// @brief set looped animation or not;
+        /// @param loop 
+        void setLoop(bool loop);
 
         /// @brief set horizontal flipping
         /// @param flip_h 
@@ -87,6 +95,7 @@ namespace anim {
         virtual void debug() {};
 
     protected:
+        bool isPlayed;
         bool looped;
         bool flip_h;
         bool flip_v;

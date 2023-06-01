@@ -142,7 +142,7 @@ void MapParser::parseGroups(XMLElement* root) {
         }
         else if (strcmp(c->Name(), "objectgroup") == 0) {
             //TODO: objectgroupParse
-            parseObjects(c);
+            //parseObjects(c);
         }
         else if (strcmp(c->Name(), "layer") == 0) {
             //TODO: layerPrase
