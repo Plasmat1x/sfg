@@ -1,29 +1,24 @@
 #pragma once
 #include<SFML/Graphics.hpp>
 
-class Layer {
-private:
-    unsigned int _id;
-    std::string _name;
-    std::string _class;
-    bool _visible;
-    bool _locked;
-    float _opacity;
-    sf::Color _tintcolor;
-    float _offsetx;
-    float _offsety;
-    float _parallaxx;
-    float _parallaxy;
-public:
-    virtual ~Layer();
+struct ObjectsLayer {
+    bool visible = true;
+    float opacity = 1.0f;
+    sf::Color tintcolor = sf::Color(255, 255, 255, 255);
+    float offsetx = 0.0f;
+    float offsety = 0.0f;
+    float parallaxx = 1.0f;
+    float parallaxy = 1.0f;
+    sf::Color color = sf::Color(255, 255, 255, 255);
+    std::vector<sf::ConvexShape> shapes;
 };
 
 struct TileLayer {
-    float opacity;
-    sf::Color tintcolor;
-    float offsetx;
-    float offsety;
-    float parallaxx;
-    float parallaxy;
+    float opacity = 1.0f;
+    sf::Color tintcolor = sf::Color(255, 255, 255, 255);
+    float offsetx = 0.0f;
+    float offsety = 0.0f;
+    float parallaxx = 1.0f;
+    float parallaxy = 1.0f;
     std::vector<sf::Sprite> tiles;
 };

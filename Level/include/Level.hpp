@@ -35,7 +35,7 @@ private:
     sf::Texture* texture;
 
     std::vector<TileLayer> layers;
-    //std::vector<Background*> backgrounds;
+    std::vector<ObjectsLayer> objects;
     std::vector<PairBG*> backgrounds;
 
     friend class MapParser;

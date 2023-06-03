@@ -1,62 +1,9 @@
 #include "MapParser.hpp"
 #include "Level.hpp"
 
+#include "Utils.hpp"
+
 using namespace tinyxml2;
-
-std::vector<int> parseCSV(std::string str) {
-    std::vector<int> vect;
-
-    std::stringstream ss(str);
-
-    for (int i; ss >> i;) {
-        vect.push_back(i);
-        if (ss.peek() == ',')
-            ss.ignore();
-    }
-
-    return vect;
-}
-
-std::vector<Point> parsePoints(std::string string) {
-    std::vector<Point> res;
-    std::stringstream ss(string);
-
-    while (ss.peek() != EOF) {
-        Point point;
-        ss >> point.x;
-        ss.ignore();
-        ss >> point.y;
-        res.push_back(point);
-    }
-
-    return res;
-}
-
-sf::Color hexToColor(const char* hexstring) {
-    uint32_t hexdec;
-    std::stringstream ss(hexstring);
-    if (ss.peek() == '#') ss.ignore();
-    ss >> std::hex >> hexdec;
-
-    unsigned int r, g, b, a;
-    unsigned int bitmask = 255;
-
-    if (((hexdec >> 24) & bitmask) > 0) {
-
-        b = (hexdec >> 0) & bitmask;
-        g = (hexdec >> 8) & bitmask;
-        r = (hexdec >> 16) & bitmask;
-        a = (hexdec >> 24) & bitmask;
-    }
-    else {
-        b = (hexdec & bitmask);
-        g = (hexdec >> 8) & bitmask;
-        r = (hexdec >> 16) & bitmask;
-        a = 255;
-    }
-
-    return sf::Color(r, g, b, a);
-}
 
 MapParser::MapParser() {
     level = nullptr;
@@ -142,7 +89,7 @@ void MapParser::parseGroups(XMLElement* root) {
         }
         else if (strcmp(c->Name(), "objectgroup") == 0) {
             //TODO: objectgroupParse
-            //parseObjects(c);
+            parseObjects(c);
         }
         else if (strcmp(c->Name(), "layer") == 0) {
             //TODO: layerPrase
@@ -184,29 +131,58 @@ void MapParser::parseObjects(XMLElement* root) {
     float _offsety = 0.f;
     float _parallaxx = 1.0f;
     float _parallaxy = 1.0f;
-    const char* _tintcolor = "#ffffffff";
-    sf::Color _color(255, 255, 255, 255);
 
     g->QueryFloatAttribute("opacity", &_opacity);
     g->QueryFloatAttribute("offsetx", &_offsetx);
     g->QueryFloatAttribute("offsety", &_offsety);
     g->QueryFloatAttribute("parallaxx", &_parallaxx);
     g->QueryFloatAttribute("parallaxy", &_parallaxy);
-    if (g->Attribute("tintcolor")) _tintcolor = g->Attribute("tintcolor");
-    _color = hexToColor(_tintcolor);
-    _color.a *= _opacity;
 
     XMLElement* e = root;
+    XMLElement* o = e->FirstChildElement("object");
 
     while (e) {
-        int id;
-        float x;
-        float y;
-        float width;
-        float height;
-        std::string type;
-        int gid;
+        ObjectsLayer layer;
 
+        e->QueryBoolAttribute("visible", &layer.visible);
+        e->QueryFloatAttribute("opacity", &layer.opacity);
+        e->QueryFloatAttribute("offsetx", &layer.offsetx);
+        e->QueryFloatAttribute("offsety", &layer.offsety);
+        e->QueryFloatAttribute("parallaxx", &layer.parallaxx);
+        e->QueryFloatAttribute("parallaxy", &layer.parallaxy);
+        layer.offsetx += _offsetx;
+        layer.offsety += _offsety;
+        layer.parallaxx *= _parallaxx;
+        layer.parallaxy *= _parallaxy;
+
+        while (o) {
+            sf::ConvexShape polygon;
+            float x = 0.0f;
+            float y = 0.0f;
+            float width = 0.0f;
+            float height = 0.0f;
+
+            o->QueryFloatAttribute("x", &x);
+            o->QueryFloatAttribute("y", &y);
+            o->QueryFloatAttribute("width", &width);
+            o->QueryFloatAttribute("height", &height);
+
+            std::vector<sf::Vector2f> points = parsePoints(o->FirstChildElement()->Attribute("points"));
+
+            polygon.setPointCount(points.size());
+            for (int i = 0; i < points.size();i++) {
+                polygon.setPoint(i, points[i]);
+            }
+            polygon.setFillColor(sf::Color(255, 0, 0, 100));
+            polygon.setOutlineColor(sf::Color::Red);
+            polygon.setOutlineThickness(1.0f);
+            polygon.setPosition(sf::Vector2f(x + layer.offsetx, y + layer.offsety));
+
+            layer.shapes.push_back(polygon);
+            o = o->NextSiblingElement("object");
+        }
+        level->objects.push_back(layer);
+        e = e->NextSiblingElement("objectgroup");
     }
 }
 void MapParser::parseImages(XMLElement* root) {
@@ -272,23 +248,6 @@ void MapParser::parseImages(XMLElement* root) {
 
         while (level->view->getSize().x > res_width)
             res_width += width;
-
-        /*
-        level->backgrounds.push_back(
-            new Background(
-                level->view->getSize().x,
-                level->view->getSize().y,
-                opacity,
-                offsetx,
-                offsety,
-                parallaxx,
-                parallaxy,
-                repeatx,
-                repeaty,
-                color,
-                PF
-            ));
-        */
 
         Background bg(
             //level->view->getSize().x,
@@ -371,8 +330,6 @@ void MapParser::parseTiles(XMLElement* root) {
         layer.offsety = offsety + _offsety;
         layer.parallaxx = parallaxx * _parallaxx;
         layer.parallaxy = parallaxy * _parallaxy;
-
-        printf("%f\n", layer.offsety);
 
         XMLElement* _e = e->FirstChildElement("data");
         std::vector<int> data = parseCSV(_e->GetText());

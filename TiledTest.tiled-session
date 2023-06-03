@@ -18,14 +18,14 @@
                 72
             ],
             "expandedObjectLayers": [
-                70,
-                72
+                72,
+                70
             ],
-            "scale": 2,
+            "scale": 1.5,
             "selectedLayer": 10,
             "viewCenter": {
-                "x": 379.5,
-                "y": 208.5
+                "x": 311.33333333333326,
+                "y": 389
             }
         },
         "resources/Maps/map2.tmx": {
@@ -81,8 +81,8 @@
     ],
     "project": "TiledTest.tiled-project",
     "recentFiles": [
-        "resources/Tilesets/tileset1.tsx",
         "resources/Maps/map1.tmx",
+        "resources/Tilesets/tileset1.tsx",
         "resources/Maps/map3.tmx",
         "resources/Maps/map2.tmx",
         "resources/Textures/tileset1.tsx"

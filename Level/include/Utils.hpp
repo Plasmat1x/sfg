@@ -1,10 +1,11 @@
 #pragma once
 
-struct Point {
-    float x;
-    float y;
-};
+#include <vector>
+#include <string>
+#include <sstream>
+#include <SFML/Graphics.hpp>
+
 
 std::vector<int> parseCSV(std::string str);
 sf::Color hexToColor(const char* hexstring);
-std::vector<Point> parsePoints(std::string string);
+std::vector<sf::Vector2f> parsePoints(std::string string);

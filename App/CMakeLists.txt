@@ -39,5 +39,5 @@ target_link_libraries(sfg_app PUBLIC
 target_include_directories(sfg_app PUBLIC ./include)
 target_include_directories(sfg_app PRIVATE ./src)
 
-set_target_properties(sfg_app PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${ROOT_DIR}/debug)
+set_target_properties(sfg_app PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${ROOT_DIR}/bin)
 set_target_properties(sfg_app PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${ROOT_DIR}/bin)

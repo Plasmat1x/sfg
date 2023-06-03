@@ -39,7 +39,14 @@ void Level::draw(sf::RenderTarget& tg, sf::RenderStates state) const {
             tg.draw(T);
         }
     }
+
+    for (ObjectsLayer L : objects) {
+        for (sf::ConvexShape O : L.shapes) {
+            tg.draw(O);
+        }
+    }
 }
+
 
 void Level::setView(sf::View* view) {
     this->view = view;
