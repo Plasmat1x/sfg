@@ -177,6 +177,25 @@ void MapParser::parseObjects(XMLElement* root) {
     ...
     */
 
+    XMLElement* g = root->Parent()->ToElement();
+
+    float _opacity = 1.0f;
+    float _offsetx = 0.f;
+    float _offsety = 0.f;
+    float _parallaxx = 1.0f;
+    float _parallaxy = 1.0f;
+    const char* _tintcolor = "#ffffffff";
+    sf::Color _color(255, 255, 255, 255);
+
+    g->QueryFloatAttribute("opacity", &_opacity);
+    g->QueryFloatAttribute("offsetx", &_offsetx);
+    g->QueryFloatAttribute("offsety", &_offsety);
+    g->QueryFloatAttribute("parallaxx", &_parallaxx);
+    g->QueryFloatAttribute("parallaxy", &_parallaxy);
+    if (g->Attribute("tintcolor")) _tintcolor = g->Attribute("tintcolor");
+    _color = hexToColor(_tintcolor);
+    _color.a *= _opacity;
+
     XMLElement* e = root;
 
     while (e) {
@@ -199,6 +218,25 @@ void MapParser::parseImages(XMLElement* root) {
    <image source="../Textures/sky.png" width="112" height="304"/>
     ...
     */
+
+    XMLElement* g = root->Parent()->ToElement();
+
+    float _opacity = 1.0f;
+    float _offsetx = 0.f;
+    float _offsety = 0.f;
+    float _parallaxx = 1.0f;
+    float _parallaxy = 1.0f;
+    const char* _tintcolor = "#ffffffff";
+    sf::Color _color(255, 255, 255, 255);
+
+    g->QueryFloatAttribute("opacity", &_opacity);
+    g->QueryFloatAttribute("offsetx", &_offsetx);
+    g->QueryFloatAttribute("offsety", &_offsety);
+    g->QueryFloatAttribute("parallaxx", &_parallaxx);
+    g->QueryFloatAttribute("parallaxy", &_parallaxy);
+    if (g->Attribute("tintcolor")) _tintcolor = g->Attribute("tintcolor");
+    _color = hexToColor(_tintcolor);
+    _color.a *= _opacity;
 
     XMLElement* e = root;
 
@@ -257,13 +295,13 @@ void MapParser::parseImages(XMLElement* root) {
             res_width,
             level->view->getSize().y,
             opacity,
-            offsetx,
-            offsety,
-            parallaxx,
-            parallaxy,
+            offsetx + _offsetx,
+            offsety + _offsety,
+            parallaxx * _parallaxx,
+            parallaxy * _parallaxy,
             repeatx,
             repeaty,
-            color,
+            color * _color,
             PF);
 
         level->backgrounds.push_back(new PairBG(bg));
@@ -282,6 +320,24 @@ void MapParser::parseTiles(XMLElement* root) {
     ...
     */
 
+    XMLElement* g = root->Parent()->ToElement();
+
+    float _opacity = 1.0f;
+    float _offsetx = 0.f;
+    float _offsety = 0.f;
+    float _parallaxx = 1.0f;
+    float _parallaxy = 1.0f;
+    const char* _tintcolor = "#ffffffff";
+    sf::Color _color(255, 255, 255, 255);
+
+    g->QueryFloatAttribute("opacity", &_opacity);
+    g->QueryFloatAttribute("offsetx", &_offsetx);
+    g->QueryFloatAttribute("offsety", &_offsety);
+    g->QueryFloatAttribute("parallaxx", &_parallaxx);
+    g->QueryFloatAttribute("parallaxy", &_parallaxy);
+    if (g->Attribute("tintcolor")) _tintcolor = g->Attribute("tintcolor");
+    _color = hexToColor(_tintcolor);
+    _color.a *= _opacity;
 
     XMLElement* e = root;
 
@@ -307,15 +363,16 @@ void MapParser::parseTiles(XMLElement* root) {
 
         if (e->Attribute("tintcolor")) tintcolor = e->Attribute("tintcolor");
 
-        layer.opacity = opacity;
+        layer.opacity = opacity * _opacity;
         color = hexToColor(tintcolor);
-        color.a = (int)(color.a * opacity);
-        layer.tintcolor = color;
-        layer.offestx = offsetx;
-        layer.offsety = offsety;
-        layer.parallaxx = parallaxx;
-        layer.parallaxy = parallaxy;
+        color.a *= opacity;
+        layer.tintcolor = color * _color;
+        layer.offsetx = offsetx + _offsetx;
+        layer.offsety = offsety + _offsety;
+        layer.parallaxx = parallaxx * _parallaxx;
+        layer.parallaxy = parallaxy * _parallaxy;
 
+        printf("%f\n", layer.offsety);
 
         XMLElement* _e = e->FirstChildElement("data");
         std::vector<int> data = parseCSV(_e->GetText());
@@ -323,21 +380,26 @@ void MapParser::parseTiles(XMLElement* root) {
         int x = 0;
         int y = 0;
         int i = 0;
+        int subToUse = 0;
 
         while (i < data.size()) {
             if (x == width) {
                 x = 0;
                 y++;
             }
-            int subToUse = 0;
+
             subToUse = data[i] - firstTileID;
-            if (subToUse < 0) subToUse = 0;
+            if (subToUse < 0) {
+                x++;
+                i++;
+                continue;
+            };
 
             sf::Sprite sprite;
             sprite.setTexture(*level->texture);
             sprite.setTextureRect(subRects[subToUse]);
-            sprite.setPosition((float)(x * tileSize.x) + offsetx, (float)(y * tileSize.y) + offsety);
-            sprite.setColor(color);
+            sprite.setPosition((float)(x * tileSize.x) + layer.offsetx, (float)(y * tileSize.y) + layer.offsety);
+            sprite.setColor(layer.tintcolor);
             layer.tiles.push_back(sprite);
 
             x++;

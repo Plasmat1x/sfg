@@ -64,7 +64,7 @@ void TestScene::init() {
     dot.setRadius(5);
     dot.setFillColor(sf::Color::Black);
 
-    p.Init(sf::Vector2f(-1280, 190), sf::Vector2f(40, 180), texture, new IdleState);
+    p.Init(sf::Vector2f(0, 0), sf::Vector2f(40, 180), texture, new IdleState);
     p.debug = false;
 
     view.zoom(0.5f);
@@ -82,7 +82,7 @@ void TestScene::init() {
     convex.setPoint(4, sf::Vector2f(48, 64));
     convex.setPoint(5, sf::Vector2f(16, 48));
     convex.setPoint(6, sf::Vector2f(0, 32));
-    convex.setPosition(sf::Vector2f(672, 224));
+    convex.setPosition(sf::Vector2f(672, 224 + 160));
     convex.setOrigin(sf::Vector2f(convex.getLocalBounds().width * 0.5f, convex.getLocalBounds().height * 0.5f));
     convex.setPosition(sf::Vector2f(convex.getGlobalBounds().left + convex.getGlobalBounds().width, convex.getGlobalBounds().top + convex.getGlobalBounds().height));
 }

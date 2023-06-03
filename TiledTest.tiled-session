@@ -63,10 +63,13 @@
             "scaleInEditor": 1
         }
     },
+    "last.exportedFilePath": "E:/repo/sfg/resources",
     "last.externalTilesetPath": "E:/tiled/TiledTest/resources/Tilesets",
     "last.imagePath": "E:/tiled/TiledTest/resources/Textures",
+    "lastUsedTilesetExportFilter": "Lua files (*.lua)",
     "map.fixedSize": true,
     "map.height": 50,
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
     "map.lastUsedFormat": "tmx",
     "map.renderOrder": null,
     "map.tileHeight": 16,
