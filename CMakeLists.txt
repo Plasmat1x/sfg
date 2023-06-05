@@ -13,3 +13,5 @@ add_subdirectory(SceneManager)
 add_subdirectory(Animator)
 add_subdirectory(Level)
 add_subdirectory(App)
+
+add_subdirectory(TestSF)

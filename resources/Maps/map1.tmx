@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-up" width="68" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="78" nextobjectid="59">
+<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="left-up" width="68" height="31" tilewidth="16" tileheight="16" infinite="0" nextlayerid="78" nextobjectid="70">
  <tileset firstgid="1" source="../Tilesets/tileset1.tsx"/>
  <group id="5" name="bg" locked="1">
   <imagelayer id="69" name="sky" class="ImageClass" locked="1" parallaxx="0.5" parallaxy="0.8" repeatx="1">
@@ -124,26 +124,23 @@
  </group>
  <group id="72" name="objects" offsetx="0" offsety="160">
   <objectgroup color="#ff0000" id="70" name="objects">
-   <object id="31" x="672" y="224">
-    <polygon points="0,0 80,0 80,32 64,48 48,64 16,48 0,32"/>
+   <object id="63" x="560" y="128">
+    <polygon points="0,0 -544,0 -544,48 32,48"/>
    </object>
-   <object id="36" x="560" y="128">
-    <polygon points="0,0 384,0 384,16 0,16"/>
+   <object id="64" x="560" y="128">
+    <polygon points="0,0 0,16 384,16 384,0"/>
    </object>
-   <object id="37" x="944" y="128">
-    <polygon points="0,0 128,0 128,64 112,80 16,80 0,64"/>
+   <object id="65" x="944" y="128">
+    <polygon points="0,0 0,64 128,64 128,0"/>
    </object>
-   <object id="38" x="896" y="256">
-    <polygon points="0,0 32,0 32,16 0,16"/>
+   <object id="66" x="672" y="224">
+    <polygon points="0,0 0,32 48,64 80,32 80,0"/>
    </object>
-   <object id="39" x="1024" y="256">
-    <polygon points="0,0 16,0 16,16 0,16"/>
+   <object id="67" x="896" y="256">
+    <polygon points="0,0 0,16 32,16 32,0"/>
    </object>
-   <object id="49" x="128" y="192">
-    <polygon points="-112,-64 432,-64 432,-48 464,-16 464,32 448,48 400,64 -112,48"/>
-   </object>
-   <object id="51" x="832" y="160">
-    <polygon points="0,0 48,0 48,16 32,32 0,16"/>
+   <object id="68" x="1024" y="256">
+    <polygon points="0,0 0,16 16,16 16,0"/>
    </object>
   </objectgroup>
  </group>

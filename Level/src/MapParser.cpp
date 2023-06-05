@@ -175,7 +175,7 @@ void MapParser::parseObjects(XMLElement* root) {
             }
             polygon.setFillColor(sf::Color(255, 0, 0, 100));
             polygon.setOutlineColor(sf::Color::Red);
-            polygon.setOutlineThickness(1.0f);
+            polygon.setOutlineThickness(-1.0f);
             polygon.setPosition(sf::Vector2f(x + layer.offsetx, y + layer.offsety));
 
             layer.shapes.push_back(polygon);

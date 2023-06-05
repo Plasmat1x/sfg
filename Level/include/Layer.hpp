@@ -1,5 +1,6 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include"Object.hpp"
 
 struct ObjectsLayer {
     bool visible = true;
@@ -11,6 +12,7 @@ struct ObjectsLayer {
     float parallaxy = 1.0f;
     sf::Color color = sf::Color(255, 255, 255, 255);
     std::vector<sf::ConvexShape> shapes;
+    std::vector<Object> objects;
 };
 
 struct TileLayer {

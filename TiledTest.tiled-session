@@ -5,14 +5,25 @@
     },
     "activeFile": "resources/Maps/map1.tmx",
     "expandedProjectPaths": [
-        "resources/Maps",
-        "resources/Tilesets",
-        "resources",
-        "build/.cmake",
         ".",
-        "resources/Textures"
+        "build/.cmake",
+        "resources/Tilesets",
+        "resources/Maps",
+        "resources/Textures",
+        "resources"
     ],
     "fileStates": {
+        "C:/Users/Administrator/Desktop/SFMLTeach/platformer.tmx": {
+            "scale": 2,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 568,
+                "y": 82.25
+            }
+        },
+        "C:/Users/Administrator/Desktop/SFMLTeach/platformer.tmx#tail1": {
+            "scaleInDock": 1
+        },
         "resources/Maps/map1.tmx": {
             "expandedGroupLayers": [
                 72
@@ -22,10 +33,10 @@
                 70
             ],
             "scale": 1.5,
-            "selectedLayer": 10,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 311.33333333333326,
-                "y": 389
+                "x": 620.6666666666666,
+                "y": 415
             }
         },
         "resources/Maps/map2.tmx": {
@@ -81,8 +92,9 @@
     ],
     "project": "TiledTest.tiled-project",
     "recentFiles": [
-        "resources/Maps/map1.tmx",
         "resources/Tilesets/tileset1.tsx",
+        "resources/Maps/map1.tmx",
+        "C:/Users/Administrator/Desktop/SFMLTeach/platformer.tmx",
         "resources/Maps/map3.tmx",
         "resources/Maps/map2.tmx",
         "resources/Textures/tileset1.tsx"

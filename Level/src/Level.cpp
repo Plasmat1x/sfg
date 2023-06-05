@@ -41,8 +41,10 @@ void Level::draw(sf::RenderTarget& tg, sf::RenderStates state) const {
     }
 
     for (ObjectsLayer L : objects) {
-        for (sf::ConvexShape O : L.shapes) {
-            tg.draw(O);
+        if (L.visible) {
+            for (sf::ConvexShape O : L.shapes) {
+                tg.draw(O);
+            }
         }
     }
 }
