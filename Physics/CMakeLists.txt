@@ -4,12 +4,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS FALSE)
 
-project(physics VERSION 0.1 LANGUAGES CXX)
+project(physics_sfg VERSION 0.1 LANGUAGES CXX)
 
-set(physics_hpp)
-set(physics_cpp)
+find_package(box2d CONFIG REQUIRED)
+find_package(SFML COMPONENTS graphics system window CONFIG REQUIRED)
 
-add_library(physics STATIC ${physics_cpp})
+set(physics_src
+    src/PhysicsUtils.cpp
+    src/DebugDraw.cpp
+)
 
-target_include_directories(physics PRIVATE ./src)
-target_include_directories(physics PUBLIC ./include)
+add_library(physics_sfg STATIC ${physics_src})
+
+target_link_libraries(physics_sfg 
+    PUBLIC box2d::box2d
+    PRIVATE sfml-graphics sfml-system sfml-window
+)
+
+target_include_directories(physics_sfg PRIVATE ./src)
+target_include_directories(physics_sfg PUBLIC ./include)

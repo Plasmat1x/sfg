@@ -11,6 +11,7 @@ set(IMGUI_DIR ${CMAKE_CURRENT_LIST_DIR}/imgui-1.89.5)
 add_subdirectory(imgui-sfml-2.5)
 add_subdirectory(SceneManager)
 add_subdirectory(Animator)
+add_subdirectory(Physics)
 add_subdirectory(Level)
 add_subdirectory(App)
 

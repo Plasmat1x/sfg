@@ -13,6 +13,7 @@ set(SRC
     src/main.cpp
     src/DebugDraw.cpp
     include/PhysicsUtils.hpp
+    include/tmain.hpp
 )
 
 add_executable(TestSF ${SRC})
