@@ -4,6 +4,7 @@
 
 #include <vector>
 
+/*
 namespace phy {
     class Obstacle {
     public:
@@ -29,3 +30,4 @@ namespace phy {
         ~Dyno();
     };
 }
+*/

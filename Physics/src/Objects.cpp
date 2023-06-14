@@ -1,5 +1,6 @@
 #include "Objects.hpp"
 
+/*
 namespace phy {
     Obstacle::Obstacle() {
 
@@ -36,6 +37,6 @@ namespace phy {
         body->CreateFixture(&fixtureDef);
     }
 }
-
+*/
 
 
