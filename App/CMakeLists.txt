@@ -13,19 +13,14 @@ project(sfg_app VERSION 0.1 LANGUAGES CXX)
 find_package(SFML COMPONENTS graphics system window CONFIG REQUIRED)
 find_package(tinyxml2 CONFIG REQUIRED) 
 
-set(app_hpp
-    include/App.hpp
-    include/Player.hpp
-    include/TestScene.hpp
-)
-
 set(app_cpp
     src/App.cpp
     src/main.cpp
     src/TestScene.cpp
+    include/Player.hpp
 )
 
-add_executable(sfg_app ${app_cpp} ${app_hpp})
+add_executable(sfg_app ${app_cpp})
 
 target_link_libraries(sfg_app PUBLIC 
     Animator 

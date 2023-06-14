@@ -12,6 +12,7 @@ find_package(SFML COMPONENTS graphics system window CONFIG REQUIRED)
 set(physics_src
     src/PhysicsUtils.cpp
     src/DebugDraw.cpp
+    src/Objects.cpp
 )
 
 add_library(physics_sfg STATIC ${physics_src})

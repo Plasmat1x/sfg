@@ -5,12 +5,12 @@
     },
     "activeFile": "resources/Maps/map1.tmx",
     "expandedProjectPaths": [
-        "build/.cmake",
         "resources",
-        ".",
+        "build/.cmake",
+        "resources/Tilesets",
         "resources/Maps",
-        "resources/Textures",
-        "resources/Tilesets"
+        ".",
+        "resources/Textures"
     ],
     "fileStates": {
         "C:/Users/Administrator/Desktop/SFMLTeach/platformer.tmx": {
@@ -35,8 +35,8 @@
             "scale": 1.5,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 287.33333333333326,
-                "y": 229.66666666666666
+                "x": 552.6666666666666,
+                "y": 269
             }
         },
         "resources/Maps/map2.tmx": {
